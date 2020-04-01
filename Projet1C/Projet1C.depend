@@ -1,0 +1,31 @@
+# depslib dependency file v1.0
+1585554543 source:t:\projet1c\projet1c.c
+	"projet1c.h"
+
+1585555503 t:\projet1c\projet1c.h
+	<stdio.h>
+	<stdlib.h>
+
+1585556696 source:t:\projet1c\main.c
+	"projet1c.h"
+
+1585556696 source:c:\users\aurélien\onedrive - efrei\l1\informatique\projet\projet1c\main.c
+	"projet1c.h"
+
+1585555503 c:\users\aurélien\onedrive - efrei\l1\informatique\projet\projet1c\projet1c.h
+	<stdio.h>
+	<stdlib.h>
+
+1585554543 source:c:\users\aurélien\onedrive - efrei\l1\informatique\projet\projet1c\projet1c.c
+	"projet1c.h"
+
+1585759091 source:c:\users\cliele\onedrive - efrei\l1\informatique\projet\projet1c\main.c
+	"projet1c.h"
+
+1585761298 c:\users\cliele\onedrive - efrei\l1\informatique\projet\projet1c\projet1c.h
+	<stdio.h>
+	<stdlib.h>
+
+1585764277 source:c:\users\cliele\onedrive - efrei\l1\informatique\projet\projet1c\projet1c.c
+	"projet1c.h"
+

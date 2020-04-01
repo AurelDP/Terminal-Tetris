@@ -1,17 +1,76 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Plateau{
+typedef struct{
     int ** tab;
     int taille;
     int forme;
     int politique;
 } plateau;
 
-void create_2darray_bis(int ***A, int L, int C);
+int** creer_tab2D_dyn(int taille_x, int taille_y);
 
-void create_array_bis(int **A, int taille);
+//UNIVERSEL
+int ** creer_bloc_uni_1(int l, int c);
+int ** creer_bloc_uni_2(int l, int c);
+int ** creer_bloc_uni_3(int l, int c);
+int ** creer_bloc_uni_4(int l, int c);
+int ** creer_bloc_uni_5(int l, int c);
+int ** creer_bloc_uni_6(int l, int c);
+int ** creer_bloc_uni_7(int l, int c);
+int ** creer_bloc_uni_8(int l, int c);
+int ** creer_bloc_uni_9(int l, int c);
+int ** creer_bloc_uni_10(int l, int c);
+int ** creer_bloc_uni_11(int l, int c);
+int ** creer_bloc_uni_12(int l, int c);
+int ** creer_bloc_uni_13(int l, int c);
+int ** creer_bloc_uni_14(int l, int c);
+int ** creer_bloc_uni_15(int l, int c);
+int ** creer_bloc_uni_16(int l, int c);
+int ** creer_bloc_uni_17(int l, int c);
+int ** creer_bloc_uni_18(int l, int c);
+int ** creer_bloc_uni_19(int l, int c);
+int ** creer_bloc_uni_20(int l, int c);
 
-void disp_2darray(plateau Plat);
+//CERCLE
+int ** creer_bloc_crc_1(int l, int c);
+int ** creer_bloc_crc_2(int l, int c);
+int ** creer_bloc_crc_3(int l, int c);
+int ** creer_bloc_crc_4(int l, int c);
+int ** creer_bloc_crc_5(int l, int c);
+int ** creer_bloc_crc_6(int l, int c);
+int ** creer_bloc_crc_7(int l, int c);
+int ** creer_bloc_crc_8(int l, int c);
+int ** creer_bloc_crc_9(int l, int c);
+int ** creer_bloc_crc_10(int l, int c);
+int ** creer_bloc_crc_11(int l, int c);
+int ** creer_bloc_crc_12(int l, int c);
 
-void fill_2darray(plateau * Plat);
+//LOSANGE
+int ** creer_bloc_los_1(int l, int c);
+int ** creer_bloc_los_2(int l, int c);
+int ** creer_bloc_los_3(int l, int c);
+int ** creer_bloc_los_4(int l, int c);
+int ** creer_bloc_los_5(int l, int c);
+int ** creer_bloc_los_6(int l, int c);
+int ** creer_bloc_los_7(int l, int c);
+int ** creer_bloc_los_8(int l, int c);
+int ** creer_bloc_los_9(int l, int c);
+int ** creer_bloc_los_10(int l, int c);
+int ** creer_bloc_los_11(int l, int c);
+int ** creer_bloc_los_12(int l, int c);
+int ** creer_bloc_los_13(int l, int c);
+int ** creer_bloc_los_14(int l, int c);
+
+//TRIANGLE
+int ** creer_bloc_tri_1(int l, int c);
+int ** creer_bloc_tri_2(int l, int c);
+int ** creer_bloc_tri_3(int l, int c);
+int ** creer_bloc_tri_4(int l, int c);
+int ** creer_bloc_tri_5(int l, int c);
+int ** creer_bloc_tri_6(int l, int c);
+int ** creer_bloc_tri_7(int l, int c);
+int ** creer_bloc_tri_8(int l, int c);
+int ** creer_bloc_tri_9(int l, int c);
+int ** creer_bloc_tri_10(int l, int c);
+int ** creer_bloc_tri_11(int l, int c);
