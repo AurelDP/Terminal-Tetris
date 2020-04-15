@@ -6,8 +6,43 @@ int** creer_tab2D_dyn(int taille_x, int taille_y){
     for(int i = 0; i < taille_x; i++){
         tab[i] = (int*)malloc(taille_y*sizeof(int));
     }
+    for(int i = 0; i < taille_x; i++){          // Ici on fait le choix de remplir automatiquement toutes les cases à 0
+        for(int j = 0; j < taille_y; j++){      // cela permet de faciliter la tache pour la création du plateau et des blocs
+            tab[i][j] = 0;                      // (même si nous ne l'avons pas utilisé pour les blocs, nous aurions pu)
+        }
+    }
     return tab;
 }
+
+int ** creer_plat_crc(int l, int c){
+    int** tab = creer_tab2D_dyn(l,c);
+    tab[0][0] = 0; tab[0][1] = 0; tab[0][2] = 0; tab[0][3] = 0;
+    tab[1][0] = 0; tab[1][1] = 0; tab[1][2] = 0; tab[1][3] = 0;
+    tab[2][0] = 1; tab[2][1] = 0; tab[2][2] = 0; tab[2][3] = 0;
+    tab[3][0] = 1; tab[3][1] = 1; tab[3][2] = 0; tab[3][3] = 0;
+    return tab;
+}
+
+int ** creer_plat_los(int l, int c){
+    int** tab = creer_tab2D_dyn(l,c);
+    return tab;
+}
+
+// A REVOIR
+int ** creer_plat_tri(int l, int c){
+    int** tab = creer_tab2D_dyn(l,c);
+    int i,j;
+    int k = l;
+    for(i = 0; i < l; i = i+2){
+        for(j = 0; j < i; j++){
+            tab[i][k] = 1;
+            k++;
+        }
+        k = k-i;
+    }
+    return tab;
+}
+
 
 //UNIVERSEL
 /*

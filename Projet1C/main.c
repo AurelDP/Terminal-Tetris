@@ -2,6 +2,14 @@
 
 int main(){
 
+    int** tab_test = creer_plat_tri(8, 15);
+    for(int i = 0; i < 8; i++){
+        for(int u = 0; i < 15; i++){
+            printf("%d",tab_test[i][u]);
+        }
+        printf("\n");
+    }
+
     // Déclaration des variables utilisées
     int choix;
 
@@ -36,9 +44,9 @@ int main(){
 
         // Choix de la taille du plateau
         do{
-            printf("Taille de votre plateau (entre 21 et 26 compris) : ");
+            printf("Taille de votre plateau (entre 21 et 25 compris, seulement en nombres impairs) : ");
             scanf("%d", &jeu.taille);
-        }while(jeu.taille < 21 || jeu.taille > 26);
+        }while(jeu.taille < 21 || jeu.taille > 25 || jeu.taille%2 == 0);
 
         // Choix de la forme du plateau
         do{
