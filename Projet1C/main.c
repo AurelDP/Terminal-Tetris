@@ -2,6 +2,9 @@
 
 int main(){
 
+    // -------------------------------------------------------------------------
+    // Bout de code pour tester l'affichage des différents types de plateau
+    // (encore en cours de création - Aurélien)
     int** tab_test = creer_plat_tri(8, 15);
     for(int i = 0; i < 8; i++){
         for(int u = 0; i < 15; i++){
@@ -9,6 +12,7 @@ int main(){
         }
         printf("\n");
     }
+    // -------------------------------------------------------------------------
 
     // Déclaration des variables utilisées
     int choix;

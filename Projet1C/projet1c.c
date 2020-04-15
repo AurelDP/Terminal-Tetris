@@ -14,6 +14,9 @@ int** creer_tab2D_dyn(int taille_x, int taille_y){
     return tab;
 }
 
+// -------------------------------------------------------------------------
+// Fonctions de création des différents types de plateau
+// (encore en cours de création - Aurélien)
 int ** creer_plat_crc(int l, int c){
     int** tab = creer_tab2D_dyn(l,c);
     tab[0][0] = 0; tab[0][1] = 0; tab[0][2] = 0; tab[0][3] = 0;
@@ -28,7 +31,6 @@ int ** creer_plat_los(int l, int c){
     return tab;
 }
 
-// A REVOIR
 int ** creer_plat_tri(int l, int c){
     int** tab = creer_tab2D_dyn(l,c);
     int i,j;
@@ -42,7 +44,7 @@ int ** creer_plat_tri(int l, int c){
     }
     return tab;
 }
-
+// -------------------------------------------------------------------------
 
 //UNIVERSEL
 /*
