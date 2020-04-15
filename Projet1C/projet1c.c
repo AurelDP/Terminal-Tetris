@@ -17,33 +17,359 @@ int** creer_tab2D_dyn(int taille_x, int taille_y){
 // -------------------------------------------------------------------------
 // Fonctions de création des différents types de plateau
 // (encore en cours de création - Aurélien)
-int ** creer_plat_crc(int l, int c){
-    int** tab = creer_tab2D_dyn(l,c);
-    tab[0][0] = 0; tab[0][1] = 0; tab[0][2] = 0; tab[0][3] = 0;
-    tab[1][0] = 0; tab[1][1] = 0; tab[1][2] = 0; tab[1][3] = 0;
-    tab[2][0] = 1; tab[2][1] = 0; tab[2][2] = 0; tab[2][3] = 0;
-    tab[3][0] = 1; tab[3][1] = 1; tab[3][2] = 0; tab[3][3] = 0;
-    return tab;
+plateau creer_plat_crc(int l, int c, plateau jeu){
+    jeu.tab = creer_tab2D_dyn(l,c);
+
+    return jeu;
 }
 
-int ** creer_plat_los(int l, int c){
-    int** tab = creer_tab2D_dyn(l,c);
-    return tab;
-}
-
-int ** creer_plat_tri(int l, int c){
-    int** tab = creer_tab2D_dyn(l,c);
-    int i,j;
-    int k = l;
-    for(i = 0; i < l; i = i+2){
-        for(j = 0; j < i; j++){
-            tab[i][k] = 1;
-            k++;
+plateau creer_plat_los(int l, int c, plateau jeu){
+    jeu.tab = creer_tab2D_dyn(l,c);
+    int ligne,compteur;
+    int decalage_ligne = 1;
+    int colonne = l/2;
+    for(ligne = 0; ligne < l/2+1; ligne++){
+        for(compteur = 0; compteur < decalage_ligne; compteur++){
+            jeu.tab[ligne][colonne] = 1;
+            colonne++;
         }
-        k = k-i;
+        decalage_ligne += 2;
+        colonne = (l/2)-(ligne+1);
     }
-    return tab;
+    colonne = 0;
+    decalage_ligne -= 2;
+    for(ligne = l/2; ligne < l; ligne++){
+        for(compteur = 0; compteur < decalage_ligne; compteur++){
+            jeu.tab[ligne][colonne] = 1;
+            colonne++;
+        }
+        decalage_ligne -= 2;
+        colonne = colonne - compteur+1;
+    }
+    return jeu;
 }
+
+plateau creer_plat_tri(int l, int c, plateau jeu){
+    jeu.tab = creer_tab2D_dyn(l,c);
+    int ligne,compteur;
+    int decalage_ligne = 1;
+    int colonne = l-1;
+    for(ligne = 0; ligne < l; ligne++){
+        for(compteur = 0; compteur < decalage_ligne; compteur++){
+            jeu.tab[ligne][colonne] = 1;
+            colonne++;
+        }
+        decalage_ligne += 2;
+        colonne = (l-1)-(ligne+1);
+    }
+    return jeu;
+}
+
+// QUELLE EST L'UTILITE DE CETTE FONCTION ?????????????????????????????????????????????????????????????????????????????????????????????????...........
+int** remplir_case_tab(int** tab, int i, plateau jeu){
+    if(jeu.forme == 1){             // Si le plateau de jeu est un cercle
+        switch(i){
+            case 0:
+                return creer_bloc_uni_1(4,4);
+                break;
+            case 1:
+                return creer_bloc_uni_2(4,4);
+                break;
+            case 2:
+                return creer_bloc_uni_3(4,4);
+                break;
+            case 3:
+                return creer_bloc_uni_4(4,4);
+                break;
+            case 4:
+                return creer_bloc_uni_5(4,4);
+                break;
+            case 5:
+                return creer_bloc_uni_6(4,4);
+                break;
+            case 6:
+                return creer_bloc_uni_7(4,4);
+                break;
+            case 7:
+                return creer_bloc_uni_8(4,4);
+                break;
+            case 8:
+                return creer_bloc_uni_9(4,4);
+                break;
+            case 9:
+                return creer_bloc_uni_10(4,4);
+                break;
+            case 10:
+                return creer_bloc_uni_11(4,4);
+                break;
+            case 11:
+                return creer_bloc_uni_12(4,4);
+                break;
+            case 12:
+                return creer_bloc_uni_13(4,4);
+                break;
+            case 13:
+                return creer_bloc_uni_14(4,4);
+                break;
+            case 14:
+                return creer_bloc_uni_15(4,4);
+                break;
+            case 15:
+                return creer_bloc_uni_16(4,4);
+                break;
+            case 16:
+                return creer_bloc_uni_17(4,4);
+                break;
+            case 17:
+                return creer_bloc_uni_18(4,4);
+                break;
+            case 18:
+                return creer_bloc_uni_19(4,4);
+                break;
+            case 19:
+                return creer_bloc_uni_20(4,4);
+                break;
+            case 20:
+                return creer_bloc_crc_1(5,5);
+                break;
+            case 21:
+                return creer_bloc_crc_2(5,5);
+                break;
+            case 22:
+                return creer_bloc_crc_3(5,5);
+                break;
+            case 23:
+                return creer_bloc_crc_4(5,5);
+                break;
+            case 24:
+                return creer_bloc_crc_5(5,5);
+                break;
+            case 25:
+                return creer_bloc_crc_6(5,5);
+                break;
+            case 26:
+                return creer_bloc_crc_7(5,5);
+                break;
+            case 27:
+                return creer_bloc_crc_8(5,5);
+                break;
+            case 28:
+                return creer_bloc_crc_9(5,5);
+                break;
+            case 29:
+                return creer_bloc_crc_10(5,5);
+                break;
+            case 30:
+                return creer_bloc_crc_11(5,5);
+                break;
+            case 31:
+                return creer_bloc_crc_12(5,5);
+                break;
+        }
+    } else if(jeu.forme == 2){      // Si le plateau de jeu est un losange
+        switch(i){
+            case 0:
+                return creer_bloc_uni_1(4,4);
+                break;
+            case 1:
+                return creer_bloc_uni_2(4,4);
+                break;
+            case 2:
+                return creer_bloc_uni_3(4,4);
+                break;
+            case 3:
+                return creer_bloc_uni_4(4,4);
+                break;
+            case 4:
+                return creer_bloc_uni_5(4,4);
+                break;
+            case 5:
+                return creer_bloc_uni_6(4,4);
+                break;
+            case 6:
+                return creer_bloc_uni_7(4,4);
+                break;
+            case 7:
+                return creer_bloc_uni_8(4,4);
+                break;
+            case 8:
+                return creer_bloc_uni_9(4,4);
+                break;
+            case 9:
+                return creer_bloc_uni_10(4,4);
+                break;
+            case 10:
+                return creer_bloc_uni_11(4,4);
+                break;
+            case 11:
+                return creer_bloc_uni_12(4,4);
+                break;
+            case 12:
+                return creer_bloc_uni_13(4,4);
+                break;
+            case 13:
+                return creer_bloc_uni_14(4,4);
+                break;
+            case 14:
+                return creer_bloc_uni_15(4,4);
+                break;
+            case 15:
+                return creer_bloc_uni_16(4,4);
+                break;
+            case 16:
+                return creer_bloc_uni_17(4,4);
+                break;
+            case 17:
+                return creer_bloc_uni_18(4,4);
+                break;
+            case 18:
+                return creer_bloc_uni_19(4,4);
+                break;
+            case 19:
+                return creer_bloc_uni_20(4,4);
+                break;
+            case 20:
+                return creer_bloc_los_1(5,5);
+                break;
+            case 21:
+                return creer_bloc_los_2(5,5);
+                break;
+            case 22:
+                return creer_bloc_los_3(5,5);
+                break;
+            case 23:
+                return creer_bloc_los_4(5,5);
+                break;
+            case 24:
+                return creer_bloc_los_5(5,5);
+                break;
+            case 25:
+                return creer_bloc_los_6(5,5);
+                break;
+            case 26:
+                return creer_bloc_los_7(5,5);
+                break;
+            case 27:
+                return creer_bloc_los_8(5,5);
+                break;
+            case 28:
+                return creer_bloc_los_9(5,5);
+                break;
+            case 29:
+                return creer_bloc_los_10(5,5);
+                break;
+            case 30:
+                return creer_bloc_los_11(5,5);
+                break;
+            case 31:
+                return creer_bloc_los_12(5,5);
+                break;
+            case 32:
+                return creer_bloc_los_13(5,5);
+                break;
+            case 33:
+                return creer_bloc_los_14(5,5);
+                break;
+        }
+    } else if(jeu.forme == 3){      // Si le plateau de jeu est un triangle
+        switch(i){
+            case 0:
+                return creer_bloc_uni_1(4,4);
+                break;
+            case 1:
+                return creer_bloc_uni_2(4,4);
+                break;
+            case 2:
+                return creer_bloc_uni_3(4,4);
+                break;
+            case 3:
+                return creer_bloc_uni_4(4,4);
+                break;
+            case 4:
+                return creer_bloc_uni_5(4,4);
+                break;
+            case 5:
+                return creer_bloc_uni_6(4,4);
+                break;
+            case 6:
+                return creer_bloc_uni_7(4,4);
+                break;
+            case 7:
+                return creer_bloc_uni_8(4,4);
+                break;
+            case 8:
+                return creer_bloc_uni_9(4,4);
+                break;
+            case 9:
+                return creer_bloc_uni_10(4,4);
+                break;
+            case 10:
+                return creer_bloc_uni_11(4,4);
+                break;
+            case 11:
+                return creer_bloc_uni_12(4,4);
+                break;
+            case 12:
+                return creer_bloc_uni_13(4,4);
+                break;
+            case 13:
+                return creer_bloc_uni_14(4,4);
+                break;
+            case 14:
+                return creer_bloc_uni_15(4,4);
+                break;
+            case 15:
+                return creer_bloc_uni_16(4,4);
+                break;
+            case 16:
+                return creer_bloc_uni_17(4,4);
+                break;
+            case 17:
+                return creer_bloc_uni_18(4,4);
+                break;
+            case 18:
+                return creer_bloc_uni_19(4,4);
+                break;
+            case 19:
+                return creer_bloc_uni_20(4,4);
+                break;
+            case 20:
+                return creer_bloc_tri_1(3,3);
+                break;
+            case 21:
+                return creer_bloc_tri_2(3,3);
+                break;
+            case 22:
+                return creer_bloc_tri_3(3,3);
+                break;
+            case 23:
+                return creer_bloc_tri_4(3,3);
+                break;
+            case 24:
+                return creer_bloc_tri_5(3,3);
+                break;
+            case 25:
+                return creer_bloc_tri_6(3,3);
+                break;
+            case 26:
+                return creer_bloc_tri_7(3,3);
+                break;
+            case 27:
+                return creer_bloc_tri_8(3,3);
+                break;
+            case 28:
+                return creer_bloc_tri_9(3,3);
+                break;
+            case 29:
+                return creer_bloc_tri_10(3,3);
+                break;
+            case 30:
+                return creer_bloc_tri_11(3,3);
+                break;
+        }
+    }
+}
+
 // -------------------------------------------------------------------------
 
 //UNIVERSEL

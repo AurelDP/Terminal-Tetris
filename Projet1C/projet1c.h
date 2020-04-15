@@ -3,12 +3,19 @@
 
 typedef struct{
     int ** tab;
+    int ** liste_blocs;
     int taille;
     int forme;
     int politique;
 } plateau;
 
 int** creer_tab2D_dyn(int taille_x, int taille_y);
+
+plateau creer_plat_crc(int l, int c, plateau jeu);
+plateau creer_plat_los(int l, int c, plateau jeu);
+plateau creer_plat_tri(int l, int c, plateau jeu);
+
+int** remplir_case_tab(int** tab, int i, plateau jeu);
 
 //UNIVERSEL
 int ** creer_bloc_uni_1(int l, int c);

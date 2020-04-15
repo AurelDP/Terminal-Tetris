@@ -1,14 +1,25 @@
 #include "projet1c.h"
+// Information : Code ASCII du carré : 254
+// Code ASCII du point central : 250
 
 int main(){
 
     // -------------------------------------------------------------------------
     // Bout de code pour tester l'affichage des différents types de plateau
     // (encore en cours de création - Aurélien)
-    int** tab_test = creer_plat_tri(8, 15);
-    for(int i = 0; i < 8; i++){
-        for(int u = 0; i < 15; i++){
-            printf("%d",tab_test[i][u]);
+    plateau jeu = {NULL, 0, 0, 0};
+    jeu = creer_plat_los(25, 25, jeu);
+    //jeu = creer_plat_tri(13, 25, jeu);
+    //jeu = creer_plat_crc(25, 25, jeu);
+    for(int i = 0; i < 25; i++){
+        for(int u = 0; u < 25; u++){
+    //for(int i = 0; i < 13; i++){
+    //    for(int u = 0; u < 25; u++){
+            if(jeu.tab[i][u] == 0){
+                printf("  ");
+            } else if(jeu.tab[i][u] == 1){
+                printf(" %c",250);
+            }
         }
         printf("\n");
     }
