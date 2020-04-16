@@ -23,9 +23,13 @@ int calcul_score();
 void afficher_plateau(plateau jeu);
 
 void afficher_plateau(plateau jeu);
+void init_blocs(plateau * plat);
 void afficher_bloc(plateau plat, int * indices_blocs);
 
 void random_blocs(int * indices_blocs, plateau jeu);
+
+int etat_ligne(plateau jeu, int l);
+int etat_colonne(plateau jeu, int c);
 
 //UNIVERSEL
 int ** creer_bloc_uni_1(int l, int c);
