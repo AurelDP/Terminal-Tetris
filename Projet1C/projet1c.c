@@ -409,6 +409,19 @@ int** remplir_case_tab(int** tab, int i, plateau jeu){
     }
 }
 
+int score_chiffres(int sc){
+    int nb = 1;
+    while(sc >= 10){
+        sc /= 10;
+        nb++;
+    }
+    return nb;
+}
+
+int calcul_score(){
+    return 1563548798;
+}
+
 void afficher_plateau(plateau jeu){
     printf("     ");
     int w;
@@ -433,7 +446,23 @@ void afficher_plateau(plateau jeu){
                     printf("%c ",254);
                 }
             }
-            printf("%c\n",186);
+            printf("%c",186);
+            if(i == 3){
+                printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
+                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                    printf("%c",196);
+                }
+                printf("%c%c%c",196,196,196);
+            } else if(i == 4){
+                printf("      Score : %d   ",calcul_score());
+            } else if(i == 5){
+                printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
+                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                    printf("%c",196);
+                }
+                printf("%c%c%c",196,196,196);
+            }
+            printf("\n");
         }
     } else if(jeu.forme == 3){
         for(int i = 0; i < jeu.taille/2+1; i++){
@@ -447,7 +476,23 @@ void afficher_plateau(plateau jeu){
                     printf("%c ",254);
                 }
             }
-            printf("%c\n",186);
+            printf("%c",186);
+            if(i == 3){
+                printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
+                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                    printf("%c",196);
+                }
+                printf("%c%c%c",196,196,196);
+            } else if(i == 4){
+                printf("      Score : %d   ",calcul_score());
+            } else if(i == 5){
+                printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
+                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                    printf("%c",196);
+                }
+                printf("%c%c%c",196,196,196);
+            }
+            printf("\n");
         }
     }
     printf("   %c%c",200,205);
