@@ -8,11 +8,10 @@ int main(){
     // Déclaration des variables utilisées
     int choix;
     int indices_blocs[3] = {0};
-    plateau jeu = {NULL, NULL, 0, 0, 0};
 
     // Affichage de l'accueil et sélection du choix du joueur
     printf("#############################\n   Comme un air de Tetris\n#############################\n\n");
-    printf("1) Commencer a joueur\n2) Afficher les regles du jeu\nIndiquez votre choix : ");
+    printf("1) Commencer a jouer\n2) Afficher les regles du jeu\nIndiquez votre choix : ");
     scanf("%d",&choix);
     while(choix != 1 && choix != 2){
         printf("\nLe choix ne correspond pas aux propositions ...\nIndiquez votre choix : ");
@@ -37,7 +36,7 @@ int main(){
     // Lancement du jeu
     if(choix == 1){
         printf("\n\n");
-        plateau jeu = {NULL, 0, 0, 0};
+        plateau jeu = {NULL, NULL, 0, 0, 0};
 
         // Choix de la taille du plateau
         do{
@@ -72,7 +71,6 @@ int main(){
         afficher_plateau(jeu);
 
         afficher_bloc(jeu, indices_blocs);
-
     }
     return(0);
 }
