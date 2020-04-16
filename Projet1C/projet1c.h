@@ -16,8 +16,10 @@ plateau creer_plat_crc(int l, int c, plateau jeu);
 plateau creer_plat_los(int l, int c, plateau jeu);
 plateau creer_plat_tri(int l, int c, plateau jeu);
 
-int** remplir_case_tab(int i, plateau jeu);
+int** remplir_case_tab(int** tab, int i, plateau jeu);
 
+int score_chiffres(int sc);
+int calcul_score();
 void afficher_plateau(plateau jeu);
 
 void afficher_plateau(plateau jeu);

@@ -14,14 +14,53 @@ int** creer_tab2D_dyn(int taille_x, int taille_y){
     return tab;
 }
 
-// -------------------------------------------------------------------------
-// En cours de création - Aurélien
+// Algorithme de tracé d'arc de cercle de Bresenham
 plateau creer_plat_crc(int l, int c, plateau jeu){
     jeu.tab = creer_tab2D_dyn(l,c);
-
+    int xCenter = l/2;
+    int yCenter = l/2;
+    int y = l/2;
+    int x = 0;
+    int m = 3 - (2 * l/2);
+    int valid;
+    int compteur;
+    jeu.tab[x + xCenter][y - yCenter] = 1;
+    for(x = 0; x <= y; x++){
+        if(m < 0){
+            m = m + (4 * x) + 6;
+        } else {
+            y -= 1;
+            m += 4*(x-y) + 10;
+        }
+        jeu.tab[x + xCenter][y + yCenter]   = 1;
+        jeu.tab[y + xCenter][x + yCenter]   = 1;
+        jeu.tab[-x + xCenter][y + yCenter]  = 1;
+        jeu.tab[-y + xCenter][x + yCenter]  = 1;
+        jeu.tab[x + xCenter][-y + yCenter]  = 1;
+        jeu.tab[y + xCenter][-x + yCenter]  = 1;
+        jeu.tab[-x + xCenter][-y + yCenter] = 1;
+        jeu.tab[-y + xCenter][-x + yCenter] = 1;
+    }
+    for(int i = 0; i < l; i++){
+        valid = 0;
+        if(i > 0 && i < l-1){
+            valid = 1;
+            compteur = 0;
+            for(int u = 0; u < l-1; u++){
+                if(((jeu.tab[i][u] == 0 && jeu.tab[i][u+1] == 0) || (jeu.tab[i][u] == 0 && jeu.tab[i][u+1] == 1) || (jeu.tab[i][u] == 1 && jeu.tab[i][u+1] == 1)) && valid == 1 && compteur == 0){
+                    valid = 1;
+                } else if(jeu.tab[i][u] == 1 && jeu.tab[i][u+1] == 0 && valid == 1){
+                    jeu.tab[i][u+1] = 1;
+                    valid = 1;
+                    compteur ++;
+                } else {
+                    valid = 0;
+                }
+            }
+        }
+    }
     return jeu;
 }
-// -------------------------------------------------------------------------
 
 plateau creer_plat_los(int l, int c, plateau jeu){
     jeu.tab = creer_tab2D_dyn(l,c);
@@ -370,6 +409,19 @@ int** remplir_case_tab(int i, plateau jeu){
     }
 }
 
+int score_chiffres(int sc){
+    int nb = 1;
+    while(sc >= 10){
+        sc /= 10;
+        nb++;
+    }
+    return nb;
+}
+
+int calcul_score(){
+    return 1563548798;
+}
+
 void afficher_plateau(plateau jeu){
     printf("     ");
     int w;
@@ -394,7 +446,23 @@ void afficher_plateau(plateau jeu){
                     printf("%c ",254);
                 }
             }
-            printf("%c\n",186);
+            printf("%c",186);
+            if(i == 3){
+                printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
+                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                    printf("%c",196);
+                }
+                printf("%c%c%c",196,196,196);
+            } else if(i == 4){
+                printf("      Score : %d   ",calcul_score());
+            } else if(i == 5){
+                printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
+                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                    printf("%c",196);
+                }
+                printf("%c%c%c",196,196,196);
+            }
+            printf("\n");
         }
     } else if(jeu.forme == 3){
         for(int i = 0; i < jeu.taille/2+1; i++){
@@ -408,7 +476,23 @@ void afficher_plateau(plateau jeu){
                     printf("%c ",254);
                 }
             }
-            printf("%c\n",186);
+            printf("%c",186);
+            if(i == 3){
+                printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
+                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                    printf("%c",196);
+                }
+                printf("%c%c%c",196,196,196);
+            } else if(i == 4){
+                printf("      Score : %d   ",calcul_score());
+            } else if(i == 5){
+                printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
+                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                    printf("%c",196);
+                }
+                printf("%c%c%c",196,196,196);
+            }
+            printf("\n");
         }
     }
     printf("   %c%c",200,205);
