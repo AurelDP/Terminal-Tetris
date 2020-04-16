@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 typedef struct{
     int ** tab;
-    int ** liste_blocs;
+    int *** liste_blocs;
     int taille;
     int forme;
     int politique;
@@ -15,9 +16,14 @@ plateau creer_plat_crc(int l, int c, plateau jeu);
 plateau creer_plat_los(int l, int c, plateau jeu);
 plateau creer_plat_tri(int l, int c, plateau jeu);
 
-int** remplir_case_tab(int** tab, int i, plateau jeu);
+int** remplir_case_tab(int i, plateau jeu);
 
 void afficher_plateau(plateau jeu);
+
+void afficher_plateau(plateau jeu);
+void afficher_bloc(plateau plat, int * indices_blocs);
+
+void random_blocs(int * indices_blocs, plateau jeu);
 
 //UNIVERSEL
 int ** creer_bloc_uni_1(int l, int c);

@@ -3,9 +3,11 @@
 // Code ASCII du point central : 250
 
 int main(){
+    srand(time(NULL));
 
     // Déclaration des variables utilisées
     int choix;
+    int indices_blocs[3] = {0};
     plateau jeu = {NULL, NULL, 0, 0, 0};
 
     // Affichage de l'accueil et sélection du choix du joueur
@@ -63,7 +65,13 @@ int main(){
         }while(jeu.politique != 1 && jeu.politique != 2);
         printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
+        init_blocs(&jeu);
+        if(jeu.politique == 2){
+            random_blocs(indices_blocs, jeu);
+        }
         afficher_plateau(jeu);
+
+        afficher_bloc(jeu, indices_blocs);
 
     }
     return(0);

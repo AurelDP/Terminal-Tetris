@@ -66,7 +66,7 @@ plateau creer_plat_tri(int l, int c, plateau jeu){
 }
 
 // QUELLE EST L'UTILITE DE CETTE FONCTION ?????????????????????????????????????????????????????????????????????????????????????????????????...........
-int** remplir_case_tab(int** tab, int i, plateau jeu){
+int** remplir_case_tab(int i, plateau jeu){
     if(jeu.forme == 1){             // Si le plateau de jeu est un cercle
         switch(i){
             case 0:
@@ -416,6 +416,160 @@ void afficher_plateau(plateau jeu){
         printf("%c%c",205,205);
     }
     printf("%c\n\n",188);
+}
+
+void init_blocs(plateau * plat){
+    int nb_blocs;
+    switch(plat -> forme){
+    case 1: //cercle
+        nb_blocs = 32;
+        break;
+    case 2: //losange
+        nb_blocs = 34;
+        break;
+    case 3: //triangle
+        nb_blocs = 31;
+        break;
+    }
+
+    plat -> liste_blocs = (int ***) malloc(nb_blocs * sizeof(int**));
+    for(int i = 0; i < nb_blocs; i++){
+        plat -> liste_blocs[i] = remplir_case_tab(i, *plat);
+    }
+}
+// -------------------------------------------------------------------------
+// Fonctions d'affichage du choix des blocs
+// (encore en cours de création - Oscar)
+void afficher_bloc(plateau plat, int * indices_blocs){
+    int nb_blocs, taille_bloc, taille_bloc_b;;
+    switch(plat.forme){
+    case 1: //cercle
+        nb_blocs = 32;
+        taille_bloc = 5;
+        break;
+    case 2: //losange
+        nb_blocs = 34;
+        taille_bloc = 5;
+        break;
+    case 3: //triangle
+        nb_blocs = 31;
+        taille_bloc = 3;
+        break;
+    }
+
+    switch(plat.politique){
+    case 1:
+        for(int i = 0; i < 4; i ++){
+            for(int j = 0; j < 20; j ++){
+                for(int k = 0; k < 4; k ++){
+                    switch(plat.liste_blocs[j][i][k]){
+                        case 0:
+                            printf("%c ", 250);
+                            break;
+                        case 1:
+                            printf("%c ", 254);
+                            break;
+                    }
+                }
+                printf("  ");
+            }
+            printf("\n");
+        }
+        for(int i = 0; i < 20; i ++){
+            if(i<10)
+                printf("  %d       ", i);
+            else
+                printf("  %d      ", i);
+        }
+        printf("\n");
+        for(int i = 0; i < taille_bloc; i ++){
+            for(int j = 20; j < nb_blocs; j ++){
+                for(int k = 0; k < taille_bloc; k ++){
+                    switch(plat.liste_blocs[j][i][k]){
+                        case 0:
+                            printf("%c ", 250);
+                            break;
+                        case 1:
+                            printf("%c ", 254);
+                            break;
+                    }
+                }
+                printf("  ");
+            }
+            printf("\n");
+        }
+        if(plat.forme == 3){
+            printf("  ");
+        }
+        else{
+            printf("    ");
+        }
+        for(int i = 20; i < nb_blocs; i++){
+            printf("%d", i);
+            if(i<nb_blocs - 1){
+                for(int j = 0; j < 2*taille_bloc; j++){
+                    printf(" ");
+                }
+            }
+        }
+        break;
+    case 2:
+        if(plat.forme == 3){
+            taille_bloc = 3;
+        }else{
+            taille_bloc = 5;
+        }
+
+        for(int i = 0; i < 3; i ++){
+            if(indices_blocs[i] < 20)
+                taille_bloc_b = 4;
+            else
+                taille_bloc_b = taille_bloc;
+
+            for(int j = 0; j < taille_bloc_b; j ++){
+                for(int k = 0; k < taille_bloc_b; k ++){
+                    switch(plat.liste_blocs[indices_blocs[i]][j][k]){
+                        case 0:
+                            printf("%c ", 250);
+                            break;
+                        case 1:
+                            printf("%c ", 254);
+                            break;
+                    }
+                }
+                printf("\n");
+            }
+            printf("  %d\n\n", i);
+        }
+        break;
+    }
+}
+
+void random_blocs(int * indices_blocs, plateau jeu){
+    int nb_blocs, flag_verif = 0;
+    switch(jeu.forme){
+    case 1:
+        nb_blocs = 32;
+        break;
+    case 2:
+        nb_blocs = 34;
+        break;
+    case 3:
+        nb_blocs = 31;
+        break;
+    }
+    indices_blocs[0] = rand() % nb_blocs;
+    while(!flag_verif){
+        indices_blocs[1] = rand() % nb_blocs;
+        if(indices_blocs[0] != indices_blocs[1])
+            flag_verif = 1;
+    }
+    flag_verif = 0;
+    while(!flag_verif){
+        indices_blocs[2] = rand() % nb_blocs;
+        if(indices_blocs[0] != indices_blocs[2] && indices_blocs[1] != indices_blocs[2])
+            flag_verif = 1;
+    }
 }
 
 // -------------------------------------------------------------------------
