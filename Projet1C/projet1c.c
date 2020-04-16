@@ -422,7 +422,7 @@ int calcul_score(){
 }
 
 void afficher_plateau(plateau jeu){
-    printf("     ");
+    printf("\n\n     ");
     int w;
     for(w = 97; w < 97+jeu.taille; w++){
         printf("%c ",w);
@@ -652,6 +652,53 @@ void random_blocs(int * indices_blocs, plateau jeu){
         if(indices_blocs[0] != indices_blocs[2] && indices_blocs[1] != indices_blocs[2])
             flag_verif = 1;
     }
+}
+
+int etat_ligne(plateau jeu, int l){
+    int compteur = 0;
+    int u = 0;
+    while(compteur == 0 && u < jeu.taille){
+        if(jeu.tab[l][u] == 1){
+            compteur ++;
+        }
+        u++;
+    }
+    if(compteur == 0){
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int etat_colonne(plateau jeu, int c){
+    int compteur = 0;
+    int u = 0;
+    if(jeu.forme == 1 || jeu.forme == 2){
+        while(compteur == 0 && u < jeu.taille){
+            if(jeu.tab[u][c] == 1){
+                compteur ++;
+            }
+            u++;
+        }
+        if(compteur == 0){
+            return 1;
+        } else {
+            return 0;
+        }
+    } else if(jeu.forme == 3){
+        while(compteur == 0 && u < jeu.taille/2+1){
+            if(jeu.tab[u][c] == 1){
+                compteur ++;
+            }
+            u++;
+        }
+        if(compteur == 0){
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 }
 
 // -------------------------------------------------------------------------
