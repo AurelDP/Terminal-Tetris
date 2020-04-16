@@ -4,29 +4,9 @@
 
 int main(){
 
-    // -------------------------------------------------------------------------
-    // Bout de code pour tester l'affichage des différents types de plateau
-    // (encore en cours de création - Aurélien)
-    plateau jeu = {NULL, 0, 0, 0};
-    jeu = creer_plat_los(25, 25, jeu);
-    //jeu = creer_plat_tri(13, 25, jeu);
-    //jeu = creer_plat_crc(25, 25, jeu);
-    for(int i = 0; i < 25; i++){
-        for(int u = 0; u < 25; u++){
-    //for(int i = 0; i < 13; i++){
-    //    for(int u = 0; u < 25; u++){
-            if(jeu.tab[i][u] == 0){
-                printf("  ");
-            } else if(jeu.tab[i][u] == 1){
-                printf(" %c",250);
-            }
-        }
-        printf("\n");
-    }
-    // -------------------------------------------------------------------------
-
     // Déclaration des variables utilisées
     int choix;
+    plateau jeu = {NULL, NULL, 0, 0, 0};
 
     // Affichage de l'accueil et sélection du choix du joueur
     printf("#############################\n   Comme un air de Tetris\n#############################\n\n");
@@ -68,14 +48,22 @@ int main(){
             printf("\nForme de votre plateau \n1 : Cercle | 2 : Losange | 3 : Triangle \nVotre choix : ");
             scanf("%d", &jeu.forme);
         }while(jeu.forme != 1 && jeu.forme != 2 && jeu.forme != 3);
+        if(jeu.forme == 1){
+            jeu = creer_plat_crc(jeu.taille, jeu.taille, jeu);
+        } else if(jeu.forme == 2){
+            jeu = creer_plat_los(jeu.taille, jeu.taille, jeu);
+        } else if(jeu.forme == 3){
+            jeu = creer_plat_tri(jeu.taille/2+1, jeu.taille, jeu);
+        }
 
         // Choix de la politique de jeu (façon de jouer)
         do{
             printf("\nPolitique de jeu \n1 : Afficher a chaque tour de jeu l'ensemble des blocs disponibles et selection d'un seul a poser \n2 : Afficher uniquement 3 blocs selectionnes aleatoirement \nVotre choix : ");
             scanf("%d", &jeu.politique);
         }while(jeu.politique != 1 && jeu.politique != 2);
+        printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
-        // RESTE DU JEU
+        afficher_plateau(jeu);
 
     }
     return(0);

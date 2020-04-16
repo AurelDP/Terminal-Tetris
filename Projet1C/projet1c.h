@@ -17,6 +17,8 @@ plateau creer_plat_tri(int l, int c, plateau jeu);
 
 int** remplir_case_tab(int** tab, int i, plateau jeu);
 
+void afficher_plateau(plateau jeu);
+
 //UNIVERSEL
 int ** creer_bloc_uni_1(int l, int c);
 int ** creer_bloc_uni_2(int l, int c);

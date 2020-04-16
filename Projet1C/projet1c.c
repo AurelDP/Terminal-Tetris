@@ -15,13 +15,13 @@ int** creer_tab2D_dyn(int taille_x, int taille_y){
 }
 
 // -------------------------------------------------------------------------
-// Fonctions de création des différents types de plateau
-// (encore en cours de création - Aurélien)
+// En cours de création - Aurélien
 plateau creer_plat_crc(int l, int c, plateau jeu){
     jeu.tab = creer_tab2D_dyn(l,c);
 
     return jeu;
 }
+// -------------------------------------------------------------------------
 
 plateau creer_plat_los(int l, int c, plateau jeu){
     jeu.tab = creer_tab2D_dyn(l,c);
@@ -368,6 +368,54 @@ int** remplir_case_tab(int** tab, int i, plateau jeu){
                 break;
         }
     }
+}
+
+void afficher_plateau(plateau jeu){
+    printf("     ");
+    int w;
+    for(w = 97; w < 97+jeu.taille; w++){
+        printf("%c ",w);
+    }
+    printf("\n");
+    printf("   %c%c",201,205);
+    for(w = 0; w < jeu.taille; w++){
+        printf("%c%c",205,205);
+    }
+    printf("%c\n",187);
+    if(jeu.forme == 1 || jeu.forme == 2){
+        for(int i = 0; i < jeu.taille; i++){
+            printf(" %c %c ",i+65,186);
+            for(int u = 0; u < jeu.taille; u++){
+                if(jeu.tab[i][u] == 0){
+                    printf("  ");
+                } else if(jeu.tab[i][u] == 1){
+                    printf("%c ",250);
+                } else if(jeu.tab[i][u] == 2){
+                    printf("%c ",254);
+                }
+            }
+            printf("%c\n",186);
+        }
+    } else if(jeu.forme == 3){
+        for(int i = 0; i < jeu.taille/2+1; i++){
+            printf(" %c %c ",i+65,186);
+            for(int u = 0; u < jeu.taille; u++){
+                if(jeu.tab[i][u] == 0){
+                    printf("  ");
+                } else if(jeu.tab[i][u] == 1){
+                    printf("%c ",250);
+                } else if(jeu.tab[i][u] == 2){
+                    printf("%c ",254);
+                }
+            }
+            printf("%c\n",186);
+        }
+    }
+    printf("   %c%c",200,205);
+    for(w = 0; w < jeu.taille; w++){
+        printf("%c%c",205,205);
+    }
+    printf("%c\n\n",188);
 }
 
 // -------------------------------------------------------------------------
