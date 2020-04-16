@@ -3,7 +3,7 @@
 
 typedef struct{
     int ** tab;
-    int ** liste_blocs;
+    int *** liste_blocs;
     int taille;
     int forme;
     int politique;
