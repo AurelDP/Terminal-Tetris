@@ -417,8 +417,9 @@ int score_chiffres(int sc){
     return nb;
 }
 
-int calcul_score(){
-    return 1563548798;
+plateau calcul_score(plateau jeu){
+    jeu.score++;
+    return jeu;
 }
 
 void afficher_plateau(plateau jeu){
