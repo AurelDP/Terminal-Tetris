@@ -8,6 +8,7 @@ typedef struct{
     int taille;
     int forme;
     int politique;
+    int score;
 } plateau;
 
 int** creer_tab2D_dyn(int taille_x, int taille_y);
