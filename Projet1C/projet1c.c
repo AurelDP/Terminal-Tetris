@@ -542,7 +542,7 @@ void afficher_bloc(plateau plat, int * indices_blocs){
     switch(plat.politique){
     case 1:
         for(int i = 0; i < 4; i ++){
-            for(int j = 0; j < 20; j ++){
+            for(int j = 0; j < 10; j ++){
                 for(int k = 0; k < 4; k ++){
                     switch(plat.liste_blocs[j][i][k]){
                         case 0:
@@ -557,15 +557,37 @@ void afficher_bloc(plateau plat, int * indices_blocs){
             }
             printf("\n");
         }
-        for(int i = 0; i < 20; i ++){
-            if(i<10)
+        for(int i = 0; i < 10; i ++){
                 printf("  %d       ", i);
-            else
+        }
+
+        printf("\n");
+
+        for(int i = 0; i < 4; i ++){
+            for(int j = 10; j < 20; j ++){
+                for(int k = 0; k < 4; k ++){
+                    switch(plat.liste_blocs[j][i][k]){
+                        case 0:
+                            printf("%c ", 250);
+                            break;
+                        case 1:
+                            printf("%c ", 254);
+                            break;
+                    }
+                }
+                printf("  ");
+            }
+            printf("\n");
+        }
+        for(int i = 10; i < 20; i ++){
                 printf("  %d      ", i);
         }
+
         printf("\n");
+
+
         for(int i = 0; i < taille_bloc; i ++){
-            for(int j = 20; j < nb_blocs; j ++){
+            for(int j = 20; j < 29; j ++){
                 for(int k = 0; k < taille_bloc; k ++){
                     switch(plat.liste_blocs[j][i][k]){
                         case 0:
@@ -586,12 +608,39 @@ void afficher_bloc(plateau plat, int * indices_blocs){
         else{
             printf("    ");
         }
-        for(int i = 20; i < nb_blocs; i++){
+        for(int i = 20; i < 29; i++){
             printf("%d", i);
-            if(i<nb_blocs - 1){
-                for(int j = 0; j < 2*taille_bloc; j++){
-                    printf(" ");
+            for(int j = 0; j < 2*taille_bloc; j++){
+                printf(" ");
+            }
+        }
+        printf("\n");
+        for(int i = 0; i < taille_bloc; i ++){
+            for(int j = 29; j < nb_blocs; j ++){
+                for(int k = 0; k < taille_bloc; k ++){
+                    switch(plat.liste_blocs[j][i][k]){
+                        case 0:
+                            printf("%c ", 250);
+                            break;
+                        case 1:
+                            printf("%c ", 254);
+                            break;
+                    }
                 }
+                printf("  ");
+            }
+            printf("\n");
+        }
+        if(plat.forme == 3){
+            printf("  ");
+        }
+        else{
+            printf("    ");
+        }
+        for(int i = 29; i < nb_blocs; i++){
+            printf("%d", i);
+            for(int j = 0; j < 2*taille_bloc; j++){
+                printf(" ");
             }
         }
         break;
