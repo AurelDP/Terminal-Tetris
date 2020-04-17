@@ -31,6 +31,9 @@ void random_blocs(int * indices_blocs, plateau jeu);
 int etat_ligne(plateau jeu, int l);
 int etat_colonne(plateau jeu, int c);
 
+plateau annuler_ligne(plateau jeu, int l);
+plateau annuler_colonne(plateau jeu, int c);
+
 //UNIVERSEL
 int ** creer_bloc_uni_1(int l, int c);
 int ** creer_bloc_uni_2(int l, int c);
