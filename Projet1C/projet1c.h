@@ -8,6 +8,7 @@ typedef struct{
     int taille;
     int forme;
     int politique;
+    int score;
 } plateau;
 
 int** creer_tab2D_dyn(int taille_x, int taille_y);
@@ -19,17 +20,21 @@ plateau creer_plat_tri(int l, int c, plateau jeu);
 int** remplir_case_tab(int i, plateau jeu);
 
 int score_chiffres(int sc);
-int calcul_score();
+plateau calcul_score(plateau jeu);
 void afficher_plateau(plateau jeu);
 
 void afficher_plateau(plateau jeu);
 void init_blocs(plateau * plat);
+int verif_validite(plateau jeu, int x, int y, int choix_bloc);
 void afficher_bloc(plateau plat, int * indices_blocs);
 
 void random_blocs(int * indices_blocs, plateau jeu);
 
 int etat_ligne(plateau jeu, int l);
 int etat_colonne(plateau jeu, int c);
+
+plateau annuler_ligne(plateau jeu, int l);
+plateau annuler_colonne(plateau jeu, int c);
 
 //UNIVERSEL
 int ** creer_bloc_uni_1(int l, int c);

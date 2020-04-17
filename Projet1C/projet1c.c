@@ -417,8 +417,9 @@ int score_chiffres(int sc){
     return nb;
 }
 
-int calcul_score(){
-    return 1563548798;
+plateau calcul_score(plateau jeu){
+    jeu.score++;
+    return jeu;
 }
 
 void afficher_plateau(plateau jeu){
@@ -448,15 +449,15 @@ void afficher_plateau(plateau jeu){
             printf("%c",186);
             if(i == 3){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                for(int u = 0; u < score_chiffres(jeu.score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
             } else if(i == 4){
-                printf("      Score : %d   ",calcul_score());
+                printf("      Score : %d   ",jeu.score);
             } else if(i == 5){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                for(int u = 0; u < score_chiffres(jeu.score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
@@ -478,15 +479,15 @@ void afficher_plateau(plateau jeu){
             printf("%c",186);
             if(i == 3){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                for(int u = 0; u < score_chiffres(jeu.score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
             } else if(i == 4){
-                printf("      Score : %d   ",calcul_score());
+                printf("      Score : %d   ",jeu.score);
             } else if(i == 5){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                for(int u = 0; u < score_chiffres(jeu.score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
@@ -519,6 +520,67 @@ void init_blocs(plateau * plat){
     for(int i = 0; i < nb_blocs; i++){
         plat -> liste_blocs[i] = remplir_case_tab(i, *plat);
     }
+}
+
+// ATTENTION : La fonction n'a pas été testée en l'absence des fonctions de placement de bloc. Pour le moment, elle n'est que théorique (et théoriquement testée, elle devrait marcher)
+int verif_validite(plateau jeu, int l, int c, int choix_bloc){
+    int retour = 2;
+    int i;
+    int u = 0;
+    switch(jeu.forme){
+        case 1: // Cercle
+            i = 4;
+            while(i > 0 && retour == 2){
+                while(u < 5 && retour == 2){
+                    if((l-(4-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){ // On détermine la position de chaque bloc plein du bloc et on regarde si ça sort du plateau
+                        retour = 0;                                                                    // ici, l-(4-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 (dans le cas du cercle)
+                    } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l+i][c+u] != 1){       // On vérifie la valeur présent sur le plateau
+                        retour = 0;
+                    }
+                    u++;
+                }
+                i--;
+            }
+            if(retour != 0){
+                retour = 1;
+            }
+            break;
+        case 2: // Losange
+            i = 4;
+            while(i > 0 && retour == 2){
+                while(u < 5 && retour == 2){
+                    if((l-(4-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){
+                        retour = 0;
+                    } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l+i][c+u] != 1){
+                        retour = 0;
+                    }
+                    u++;
+                }
+                i--;
+            }
+            if(retour != 0){
+                retour = 1;
+            }
+            break;
+        case 3: // Triangle
+            i = 3;
+            while(i > 0 && retour == 2){
+                while(u < 4 && retour == 2){
+                    if((l-(3-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){
+                        retour = 0;
+                    } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l+i][c+u] != 1){
+                        retour = 0;
+                    }
+                    u++;
+                }
+                i--;
+            }
+            if(retour != 0){
+                retour = 1;
+            }
+            break;
+    }
+    return retour;
 }
 
 // Fonctions d'affichage du choix des blocs
@@ -706,6 +768,7 @@ void random_blocs(int * indices_blocs, plateau jeu){
 int etat_ligne(plateau jeu, int l){
     int compteur = 0;
     int u = 0;
+    int retour = 2;
     while(compteur == 0 && u < jeu.taille){
         if(jeu.tab[l][u] == 1){
             compteur ++;
@@ -713,15 +776,17 @@ int etat_ligne(plateau jeu, int l){
         u++;
     }
     if(compteur == 0){
-        return 1;
+        retour = 1;
     } else {
-        return 0;
+        retour = 0;
     }
+    return retour;
 }
 
 int etat_colonne(plateau jeu, int c){
     int compteur = 0;
     int u = 0;
+    int retour = 2;
     if(jeu.forme == 1 || jeu.forme == 2){
         while(compteur == 0 && u < jeu.taille){
             if(jeu.tab[u][c] == 1){
@@ -730,9 +795,9 @@ int etat_colonne(plateau jeu, int c){
             u++;
         }
         if(compteur == 0){
-            return 1;
+            retour = 1;
         } else {
-            return 0;
+            retour = 0;
         }
     } else if(jeu.forme == 3){
         while(compteur == 0 && u < jeu.taille/2+1){
@@ -742,12 +807,41 @@ int etat_colonne(plateau jeu, int c){
             u++;
         }
         if(compteur == 0){
-            return 1;
+            retour = 1;
         } else {
-            return 0;
+            retour = 0;
         }
     }
+    return retour;
+}
 
+plateau annuler_ligne(plateau jeu, int l){
+    for(int u = 0; u < jeu.taille; u++){
+        if(jeu.tab[l][u] == 2){
+            jeu.tab[l][u] = 1;
+            jeu = calcul_score(jeu);
+        }
+    }
+    return jeu;
+}
+
+plateau annuler_colonne(plateau jeu, int c){
+    if(jeu.forme == 1 || jeu.forme == 2){
+        for(int u = 0; u < jeu.taille; u++){
+            if(jeu.tab[u][c] == 2){
+                jeu.tab[u][c] = 1;
+                jeu = calcul_score(jeu);
+            }
+        }
+    } else if(jeu.forme == 3){
+        for(int u = 0; u < jeu.taille/2+1; u++){
+            if(jeu.tab[u][c] == 2){
+                jeu.tab[u][c] = 1;
+                jeu = calcul_score(jeu);
+            }
+        }
+    }
+    return jeu;
 }
 
 // -------------------------------------------------------------------------
