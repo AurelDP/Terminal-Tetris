@@ -658,6 +658,7 @@ void random_blocs(int * indices_blocs, plateau jeu){
 int etat_ligne(plateau jeu, int l){
     int compteur = 0;
     int u = 0;
+    int retour = 2;
     while(compteur == 0 && u < jeu.taille){
         if(jeu.tab[l][u] == 1){
             compteur ++;
@@ -665,15 +666,17 @@ int etat_ligne(plateau jeu, int l){
         u++;
     }
     if(compteur == 0){
-        return 1;
+        retour = 1;
     } else {
-        return 0;
+        retour = 0;
     }
+    return retour;
 }
 
 int etat_colonne(plateau jeu, int c){
     int compteur = 0;
     int u = 0;
+    int retour = 2;
     if(jeu.forme == 1 || jeu.forme == 2){
         while(compteur == 0 && u < jeu.taille){
             if(jeu.tab[u][c] == 1){
@@ -682,9 +685,9 @@ int etat_colonne(plateau jeu, int c){
             u++;
         }
         if(compteur == 0){
-            return 1;
+            retour = 1;
         } else {
-            return 0;
+            retour = 0;
         }
     } else if(jeu.forme == 3){
         while(compteur == 0 && u < jeu.taille/2+1){
@@ -694,11 +697,12 @@ int etat_colonne(plateau jeu, int c){
             u++;
         }
         if(compteur == 0){
-            return 1;
+            retour = 1;
         } else {
-            return 0;
+            retour = 0;
         }
     }
+    return retour;
             jeu = calcul_score(jeu);
 
                 jeu = calcul_score(jeu);
