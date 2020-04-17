@@ -703,10 +703,35 @@ int etat_colonne(plateau jeu, int c){
         }
     }
     return retour;
-            jeu = calcul_score(jeu);
+}
 
+plateau annuler_ligne(plateau jeu, int l){
+    for(int u = 0; u < jeu.taille; u++){
+        if(jeu.tab[l][u] == 2){
+            jeu.tab[l][u] = 1;
+            jeu = calcul_score(jeu);
+        }
+    }
+    return jeu;
+}
+
+plateau annuler_colonne(plateau jeu, int c){
+    if(jeu.forme == 1 || jeu.forme == 2){
+        for(int u = 0; u < jeu.taille; u++){
+            if(jeu.tab[u][c] == 2){
+                jeu.tab[u][c] = 1;
                 jeu = calcul_score(jeu);
+            }
+        }
+    } else if(jeu.forme == 3){
+        for(int u = 0; u < jeu.taille/2+1; u++){
+            if(jeu.tab[u][c] == 2){
+                jeu.tab[u][c] = 1;
                 jeu = calcul_score(jeu);
+            }
+        }
+    }
+    return jeu;
 }
 
 // -------------------------------------------------------------------------
