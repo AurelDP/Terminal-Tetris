@@ -25,6 +25,7 @@ void afficher_plateau(plateau jeu);
 
 void afficher_plateau(plateau jeu);
 void init_blocs(plateau * plat);
+int verif_validite(plateau jeu, int x, int y, int choix_bloc);
 void afficher_bloc(plateau plat, int * indices_blocs);
 
 void random_blocs(int * indices_blocs, plateau jeu);
