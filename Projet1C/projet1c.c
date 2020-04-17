@@ -522,6 +522,67 @@ void init_blocs(plateau * plat){
     }
 }
 
+// ATTENTION : La fonction n'a pas été testée en l'absence des fonctions de placement de bloc. Pour le moment, elle n'est que théorique (et théoriquement testée, elle devrait marcher)
+int verif_validite(plateau jeu, int l, int c, int choix_bloc){
+    int retour = 2;
+    int i;
+    int u = 0;
+    switch(jeu.forme){
+        case 1: // Cercle
+            i = 4;
+            while(i > 0 && retour == 2){
+                while(u < 5 && retour == 2){
+                    if((l-(4-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){ // On détermine la position de chaque bloc plein du bloc et on regarde si ça sort du plateau
+                        retour = 0;                                                                    // ici, l-(4-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 (dans le cas du cercle)
+                    } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l+i][c+u] != 1){       // On vérifie la valeur présent sur le plateau
+                        retour = 0;
+                    }
+                    u++;
+                }
+                i--;
+            }
+            if(retour != 0){
+                retour = 1;
+            }
+            break;
+        case 2: // Losange
+            i = 4;
+            while(i > 0 && retour == 2){
+                while(u < 5 && retour == 2){
+                    if((l-(4-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){
+                        retour = 0;
+                    } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l+i][c+u] != 1){
+                        retour = 0;
+                    }
+                    u++;
+                }
+                i--;
+            }
+            if(retour != 0){
+                retour = 1;
+            }
+            break;
+        case 3: // Triangle
+            i = 3;
+            while(i > 0 && retour == 2){
+                while(u < 4 && retour == 2){
+                    if((l-(3-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){
+                        retour = 0;
+                    } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l+i][c+u] != 1){
+                        retour = 0;
+                    }
+                    u++;
+                }
+                i--;
+            }
+            if(retour != 0){
+                retour = 1;
+            }
+            break;
+    }
+    return retour;
+}
+
 // Fonctions d'affichage du choix des blocs
 void afficher_bloc(plateau plat, int * indices_blocs){
     int nb_blocs, taille_bloc, taille_bloc_b;;
