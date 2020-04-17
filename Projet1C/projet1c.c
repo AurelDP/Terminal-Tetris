@@ -449,15 +449,15 @@ void afficher_plateau(plateau jeu){
             printf("%c",186);
             if(i == 3){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                for(int u = 0; u < score_chiffres(jeu.score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
             } else if(i == 4){
-                printf("      Score : %d   ",calcul_score());
+                printf("      Score : %d   ",jeu.score);
             } else if(i == 5){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                for(int u = 0; u < score_chiffres(jeu.score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
@@ -479,15 +479,15 @@ void afficher_plateau(plateau jeu){
             printf("%c",186);
             if(i == 3){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                for(int u = 0; u < score_chiffres(jeu.score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
             } else if(i == 4){
-                printf("      Score : %d   ",calcul_score());
+                printf("      Score : %d   ",jeu.score);
             } else if(i == 5){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(calcul_score()); u++){
+                for(int u = 0; u < score_chiffres(jeu.score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
@@ -699,7 +699,10 @@ int etat_colonne(plateau jeu, int c){
             return 0;
         }
     }
+            jeu = calcul_score(jeu);
 
+                jeu = calcul_score(jeu);
+                jeu = calcul_score(jeu);
 }
 
 // -------------------------------------------------------------------------
