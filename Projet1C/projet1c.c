@@ -537,7 +537,7 @@ int verif_validite(plateau jeu, int l, int c, int choix_bloc, int* indices_blocs
             taille_bloc = 3;
             break;
     }
-    if(choix_bloc < 20){                                                                                            // Si le bloc à poser est un bloc universel, le maximum de blocs qui le composent est de 4 en largeur
+    if((choix_bloc < 20 && jeu.politique == 1) || (indices_blocs[choix_bloc] < 20 && jeu.politique == 2)){          // Si le bloc à poser est un bloc universel, le maximum de blocs qui le composent est de 4 en largeur
         taille_bloc = 4;
     }
     i = taille_bloc-1;
@@ -548,19 +548,19 @@ int verif_validite(plateau jeu, int l, int c, int choix_bloc, int* indices_blocs
                 case 1:                                                                                             // Si la politique est normale et que tous les blocs sont affichés
                     if((l-(taille_bloc-1-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){  // On détermine la position de chaque bloc plein du bloc et on regarde si ça sort du plateau
                         retour = 0;                                                                                 // ici, l-(taille_bloc-1-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 = taille_bloc-1 (dans le cas du cercle)
-                        printf("\nErreur : Une des cases du bloc sort du plateau de jeu, ou le bloc sort des limites du jeu !");
+                        printf("\n\nErreur : Une des cases du bloc sort du plateau de jeu, ou le bloc sort des limites du jeu !\n");
                     } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l-(taille_bloc-1-i)][c+u] != 1){    // On vérifie la valeur présente sur le plateau
                         retour = 0;
-                        printf("\nErreur : Le bloc ne peut pas se placer ici (il y a surement un autre bloc qui le bloque, ou il n'est pas dans le plateau de jeu) !");
+                        printf("\n\nErreur : Le bloc ne peut pas se placer ici (il y a surement un autre bloc qui le bloque, ou il n'est pas dans le plateau de jeu) !\n");
                     }
                     break;
                 case 2:                                                                                                             // Si seuls 3 blocs aléatoires sont affichés
                     if((l-(taille_bloc-1-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[indices_blocs[choix_bloc]][i][u] == 1){   // On détermine la position de chaque bloc plein du bloc grâce à son indice dans le tableau des blocs aléatoires et on regarde si ça sort du plateau
                         retour = 0;                                                                                                 // ici, l-(taille_bloc-1-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 = taille_bloc-1 (dans le cas du cercle)
-                        printf("\nErreur : Une des cases du bloc sort du plateau de jeu, ou le bloc sort des limites du jeu !");
+                        printf("\n\nErreur : Une des cases du bloc sort du plateau de jeu, ou le bloc sort des limites du jeu !\n");
                     } else if(jeu.liste_blocs[indices_blocs[choix_bloc]][i][u] == 1 && jeu.tab[l-(taille_bloc-1-i)][c+u] != 1){     // On vérifie la valeur présente sur le plateau
                         retour = 0;
-                        printf("\nErreur : Le bloc ne peut pas se placer ici (il y a surement un autre bloc qui le bloque, ou il n'est pas dans le plateau de jeu) !");
+                        printf("\n\nErreur : Le bloc ne peut pas se placer ici (il y a surement un autre bloc qui le bloque, ou il n'est pas dans le plateau de jeu) !\n");
                     }
                     break;
             }
@@ -731,9 +731,9 @@ void afficher_bloc(plateau plat, int * indices_blocs){
     printf("\n\n");
 }
 
-int selection_bloc(int* indices_blocs, plateau jeu){            // Demande à l'utilisateur de choisir un bloc dans la liste
-    int indice_retour;                                          // indice_retour renverra l'indice du bloc choisi pour pouvoir le sélectionner dans les tableaux selon la politique
-    int max;                                                    // max correspond à l'indice maximum que l'utilisateur peut choisir, selon la politique et la forme du plateau
+int selection_bloc(int* indices_blocs, plateau jeu, int tentative){ // Demande à l'utilisateur de choisir un bloc dans la liste
+    int indice_retour;                                              // indice_retour renverra l'indice du bloc choisi pour pouvoir le sélectionner dans les tableaux selon la politique
+    int max;                                                        // max correspond à l'indice maximum que l'utilisateur peut choisir, selon la politique et la forme du plateau
     if(jeu.politique == 1){
         switch(jeu.forme){
             case 1:
@@ -851,7 +851,7 @@ plateau placer_bloc(plateau jeu, int l, int c, int choix_bloc, int* indices_bloc
             taille_bloc = 3;
             break;
     }
-    if((choix_bloc < 20 && jeu.politique == 1) || (indices_blocs[choix_bloc] < 20 && jeu.politique == 2)){          // Si le bloc ï¿½ poser est un bloc universel, le maximum de blocs qui le composent est de 4 en largeur
+    if((choix_bloc < 20 && jeu.politique == 1) || (indices_blocs[choix_bloc] < 20 && jeu.politique == 2)){          // Si le bloc à poser est un bloc universel, le maximum de blocs qui le composent est de 4 en largeur
         taille_bloc = 4;
     }
     for(int i = taille_bloc-1; i >= 0; i--){
@@ -888,6 +888,12 @@ int etat_ligne(plateau jeu, int l){
     } else {                                    // Si le compteur n'est plus à 0, c'est-à-dire qu'il y a eu un trou dans la ligne, on retourne 0
         retour = 0;
     }
+    if(jeu.forme == 2 && (l == 0 || l == jeu.taille-1)){
+        retour = 0;                             // Si la forme est un losange, on exclu la ligne du haut et du bas (ligne constituée d'une seule case)
+    }
+    if(jeu.forme == 3 && l == 0){
+        retour = 0;                             // Si la forme est un triangle, on exclu la ligne du haut (ligne constituée d'une seule case)
+    }
     return retour;
 }
 
@@ -920,7 +926,8 @@ int etat_colonne(plateau jeu, int c){           // Même principe que pour etat_l
             retour = 0;
         }
     }
-        retour = 0;                             // Si la forme est un losange ou un triangle, on exclu la ligne de gauche et de droite (ligne constituï¿½e d'une seule case)
+    if((jeu.forme == 2 || jeu.forme == 3) && (c == 0 || c == jeu.taille-1)){
+        retour = 0;                             // Si la forme est un losange ou un triangle, on exclu la ligne de gauche et de droite (ligne constituée d'une seule case)
     }
     return retour;
 }
