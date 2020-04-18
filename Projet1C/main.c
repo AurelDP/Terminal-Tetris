@@ -8,6 +8,8 @@ int main(){
     // Déclaration des variables utilisées
     int choix;
     int indices_blocs[3] = {0}; // Dans le cas où la politique choisie est 2 (3 blocs aléatoires)
+    int jouer = 1;
+    int indice_choix, ligne, colonne;
 
     // Affichage de l'accueil et sélection du choix du joueur
     printf("#############################\n   Comme un air de Tetris\n#############################\n\n");
@@ -65,12 +67,21 @@ int main(){
         printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
         init_blocs(&jeu);
-        if(jeu.politique == 2){
-            selectionner_blocs(indices_blocs, jeu);
-        }
-        afficher_plateau(jeu);
 
-        afficher_bloc(jeu, indices_blocs);
+        // Début de la boucle de jeu
+        while(jouer){
+            if(jeu.politique == 2){
+                selectionner_blocs(indices_blocs, jeu);
+            }
+            afficher_plateau(jeu);
+            afficher_bloc(jeu, indices_blocs);
+
+            do{
+                indice_choix = selection_bloc(indices_blocs, jeu);
+                ligne = selection_coos_ligne(jeu);
+                colonne = selection_coos_colonne(jeu);
+            }while(!verif_validite(jeu, ligne, colonne, indice_choix, indices_blocs));
+        }
     }
     return(0);
 }
