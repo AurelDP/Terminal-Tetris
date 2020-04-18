@@ -721,6 +721,16 @@ void afficher_bloc(plateau plat, int * indices_blocs){
     }
 }
 
+int convert_lettre_nombre(char lettre){                         // Converssion des coordonnées données par l'utilisateur en indices utilisables par les tableaux
+    int nombre;
+    if(lettre >= 65 && lettre <= 90){
+        nombre = lettre-65;
+    } else if(lettre >= 97 && lettre <= 122){
+        nombre = lettre-97;
+    }
+    return nombre;
+}
+
 void selectionner_blocs(int * indices_blocs, plateau jeu){      // Rempli un tableau de 3 valeurs avec 3 indices aléatoires dans le tableau global des blocs
     int nb_blocs, flag_verif = 0;                               // Cela permet alors d'afficher aléatoirement 3 blocs, représentés par des indices qui renvoient vers le tableau général
     switch(jeu.forme){
