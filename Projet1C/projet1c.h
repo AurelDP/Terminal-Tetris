@@ -28,7 +28,7 @@ void init_blocs(plateau * plat);
 int verif_validite(plateau jeu, int l, int c, int choix_bloc, int* indices_blocs);
 void afficher_bloc(plateau plat, int * indices_blocs);
 
-int selection_bloc(int* indices_blocs, plateau jeu);
+int selection_bloc(int* indices_blocs, plateau jeu, int tentative);
 int selection_coos_ligne(plateau jeu);
 int selection_coos_colonne(plateau jeu);
 
