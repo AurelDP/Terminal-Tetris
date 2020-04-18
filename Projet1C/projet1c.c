@@ -750,7 +750,7 @@ int selection_bloc(int* indices_blocs, plateau jeu){            // Demande à l'u
         max = 2;
     }
     do{
-        printf("\nChoisissez un bloc a poser parmi la liste ci-dessus : ");
+        printf("\nTentative %d/3 : Choisissez un bloc a poser parmi la liste ci-dessus : ",tentative);
         scanf("%d",&indice_retour);
     }while(indice_retour < 0 || indice_retour > max);
     return indice_retour;
@@ -919,6 +919,8 @@ int etat_colonne(plateau jeu, int c){           // Même principe que pour etat_l
         } else {
             retour = 0;
         }
+    }
+        retour = 0;                             // Si la forme est un losange ou un triangle, on exclu la ligne de gauche et de droite (ligne constituï¿½e d'une seule case)
     }
     return retour;
 }
