@@ -34,11 +34,19 @@ int selection_coos_colonne(plateau jeu);
 
 void selectionner_blocs(int * indices_blocs, plateau jeu);
 
+plateau placer_bloc(plateau jeu, int x, int y, int choix_bloc, int* indices_blocs);
+
 int etat_ligne(plateau jeu, int l);
 int etat_colonne(plateau jeu, int c);
 
 plateau annuler_ligne(plateau jeu, int l);
 plateau annuler_colonne(plateau jeu, int c);
+
+int choix_debut();
+int affichage_regles();
+plateau choix_plateau(plateau jeu);
+plateau choix_politique(plateau jeu);
+void message_fin(plateau jeu);
 
 //UNIVERSEL
 int ** creer_bloc_uni_1(int l, int c);
