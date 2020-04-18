@@ -425,19 +425,19 @@ plateau calcul_score(plateau jeu){
 void afficher_plateau(plateau jeu){
     printf("\n\n     ");
     int w;
-    for(w = 97; w < 97+jeu.taille; w++){
+    for(w = 97; w < 97+jeu.taille; w++){            // Affichage des lettres en haut du plateau avec le code ASCII
         printf("%c ",w);
     }
     printf("\n");
     printf("   %c%c",201,205);
-    for(w = 0; w < jeu.taille; w++){
+    for(w = 0; w < jeu.taille; w++){                // Affichage des lignes sous les lettres
         printf("%c%c",205,205);
     }
     printf("%c\n",187);
-    if(jeu.forme == 1 || jeu.forme == 2){
+    if(jeu.forme == 1 || jeu.forme == 2){           // Différenciation Cercle et Losange avec Triangle car hauteur différente
         for(int i = 0; i < jeu.taille; i++){
-            printf(" %c %c ",i+65,186);
-            for(int u = 0; u < jeu.taille; u++){
+            printf(" %c %c ",i+65,186);             // Affichage de la lettre et du séparateur de chaque ligne
+            for(int u = 0; u < jeu.taille; u++){    // Affichage du plateau (jeu.tab)
                 if(jeu.tab[i][u] == 0){
                     printf("  ");
                 } else if(jeu.tab[i][u] == 1){
@@ -447,13 +447,13 @@ void afficher_plateau(plateau jeu){
                 }
             }
             printf("%c",186);
-            if(i == 3){
+            if(i == 3){                             // Affichage du score en fonction de la ligne
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
                 for(int u = 0; u < score_chiffres(jeu.score); u++){
-                    printf("%c",196);
+                    printf("%c",196);               // Calcul et affichage du bon nombre de tirets pour centrer le texte, peut importe le score (fonction score_chiffres calcul le nombre de chiffres dans le score)
                 }
                 printf("%c%c%c",196,196,196);
-            } else if(i == 4){
+            } else if(i == 4){                      // Affichage du score à l'aide de jeu.score, variable elle-même modifiée par calcul_score
                 printf("      Score : %d   ",jeu.score);
             } else if(i == 5){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
@@ -464,7 +464,7 @@ void afficher_plateau(plateau jeu){
             }
             printf("\n");
         }
-    } else if(jeu.forme == 3){
+    } else if(jeu.forme == 3){                      // Si la forme est un triangle, même principe mais avec une hauteur divisée par 2
         for(int i = 0; i < jeu.taille/2+1; i++){
             printf(" %c %c ",i+65,186);
             for(int u = 0; u < jeu.taille; u++){
@@ -495,7 +495,7 @@ void afficher_plateau(plateau jeu){
             printf("\n");
         }
     }
-    printf("   %c%c",200,205);
+    printf("   %c%c",200,205);                      // Affichage des séparateurs finaux
     for(w = 0; w < jeu.taille; w++){
         printf("%c%c",205,205);
     }
@@ -721,8 +721,8 @@ void afficher_bloc(plateau plat, int * indices_blocs){
     }
 }
 
-void random_blocs(int * indices_blocs, plateau jeu){
-    int nb_blocs, flag_verif = 0;
+void selectionner_blocs(int * indices_blocs, plateau jeu){      // Rempli un tableau de 3 valeurs avec 3 indices aléatoires dans le tableau global des blocs
+    int nb_blocs, flag_verif = 0;                               // Cela permet alors d'afficher aléatoirement 3 blocs, représentés par des indices qui renvoient vers le tableau général
     switch(jeu.forme){
     case 1:
         nb_blocs = 32;
@@ -752,21 +752,21 @@ int etat_ligne(plateau jeu, int l){
     int compteur = 0;
     int u = 0;
     int retour = 2;
-    while(compteur == 0 && u < jeu.taille){
-        if(jeu.tab[l][u] == 1){
+    while(compteur == 0 && u < jeu.taille){     // On réduit le nombre de calculs avec le while au lieu d'un for
+        if(jeu.tab[l][u] == 1){                 // Dès qu'on trouve un trou dans la ligne, le compteur s'incrémente, ce qui fait sortir de la boucle
             compteur ++;
         }
         u++;
     }
     if(compteur == 0){
         retour = 1;
-    } else {
+    } else {                                    // Si le compteur n'est plus à 0, c'est-à-dire qu'il y a eu un trou dans la ligne, on retourne 0
         retour = 0;
     }
     return retour;
 }
 
-int etat_colonne(plateau jeu, int c){
+int etat_colonne(plateau jeu, int c){           // Même principe que pour etat_ligne, sauf que l'on met le triangle à part car sa hauteur est différente
     int compteur = 0;
     int u = 0;
     int retour = 2;
@@ -798,7 +798,7 @@ int etat_colonne(plateau jeu, int c){
     return retour;
 }
 
-plateau annuler_ligne(plateau jeu, int l){
+plateau annuler_ligne(plateau jeu, int l){      // Pour toute la ligne, on remplace tous les 2 du tableau par des 1
     for(int u = 0; u < jeu.taille; u++){
         if(jeu.tab[l][u] == 2){
             jeu.tab[l][u] = 1;
@@ -808,7 +808,7 @@ plateau annuler_ligne(plateau jeu, int l){
     return jeu;
 }
 
-plateau annuler_colonne(plateau jeu, int c){
+plateau annuler_colonne(plateau jeu, int c){    // Même principe que pour annuler_ligne, en mettant encore de coté le triangle
     if(jeu.forme == 1 || jeu.forme == 2){
         for(int u = 0; u < jeu.taille; u++){
             if(jeu.tab[u][c] == 2){
