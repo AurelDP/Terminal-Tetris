@@ -522,39 +522,47 @@ void init_blocs(plateau * plat){
     }
 }
 
-// ATTENTION : La fonction n'a pas été testée en l'absence des fonctions de placement de bloc. Pour le moment, elle n'est que théorique (et théoriquement testée, elle devrait marcher)
-int verif_validite(plateau jeu, int l, int c, int choix_bloc){
+int verif_validite(plateau jeu, int l, int c, int choix_bloc, int* indices_blocs){
     int retour = 2;
-    int i;
-    int u = 0;
+    int i,u;
     int taille_bloc = 0;
     switch(jeu.forme){
         case 1: // Cercle
-            if((l < 0 || l >= jeu.taille) || (c < 0 || c >= jeu.taille)){   // Si les coordonnées entrées ne sont pas dans le plateau de jeu
-                retour = 0;
-            }
             taille_bloc = 5;
             break;
         case 2: // Losange
-            if((l < 0 || l >= jeu.taille) || (c < 0 || c >= jeu.taille)){
-                retour = 0;
-            }
             taille_bloc = 5;
             break;
         case 3: // Triangle
-            if((l < 0 || l >= jeu.taille/2+1) || (c < 0 || c >= jeu.taille)){ // Utilisation de jeu.taille/2+1 car le triangle est deux fois moins haut
-                retour = 0;
-            }
-            taille_bloc = 4;
+            taille_bloc = 3;
             break;
     }
+    if(choix_bloc < 20){                                                                                            // Si le bloc à poser est un bloc universel, le maximum de blocs qui le composent est de 4 en largeur
+        taille_bloc = 4;
+    }
     i = taille_bloc-1;
-    while(i > 0 && retour == 2){
+    while(i >= 0 && retour == 2){
+        u = 0;
         while(u < taille_bloc && retour == 2){
-            if((l-(taille_bloc-1-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){  // On détermine la position de chaque bloc plein du bloc et on regarde si ça sort du plateau
-                retour = 0;                                                                                 // ici, l-(taille_bloc-1-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 = taille_bloc-1 (dans le cas du cercle)
-            } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l+i][c+u] != 1){                    // On vérifie la valeur présent sur le plateau
-                retour = 0;
+            switch(jeu.politique){
+                case 1:                                                                                             // Si la politique est normale et que tous les blocs sont affichés
+                    if((l-(taille_bloc-1-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){  // On détermine la position de chaque bloc plein du bloc et on regarde si ça sort du plateau
+                        retour = 0;                                                                                 // ici, l-(taille_bloc-1-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 = taille_bloc-1 (dans le cas du cercle)
+                        printf("\nErreur : Une des cases du bloc sort du plateau de jeu, ou le bloc sort des limites du jeu !");
+                    } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l-(taille_bloc-1-i)][c+u] != 1){    // On vérifie la valeur présente sur le plateau
+                        retour = 0;
+                        printf("\nErreur : Le bloc ne peut pas se placer ici (il y a surement un autre bloc qui le bloque, ou il n'est pas dans le plateau de jeu) !");
+                    }
+                    break;
+                case 2:                                                                                                             // Si seuls 3 blocs aléatoires sont affichés
+                    if((l-(taille_bloc-1-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[indices_blocs[choix_bloc]][i][u] == 1){   // On détermine la position de chaque bloc plein du bloc grâce à son indice dans le tableau des blocs aléatoires et on regarde si ça sort du plateau
+                        retour = 0;                                                                                                 // ici, l-(taille_bloc-1-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 = taille_bloc-1 (dans le cas du cercle)
+                        printf("\nErreur : Une des cases du bloc sort du plateau de jeu, ou le bloc sort des limites du jeu !");
+                    } else if(jeu.liste_blocs[indices_blocs[choix_bloc]][i][u] == 1 && jeu.tab[l-(taille_bloc-1-i)][c+u] != 1){     // On vérifie la valeur présente sur le plateau
+                        retour = 0;
+                        printf("\nErreur : Le bloc ne peut pas se placer ici (il y a surement un autre bloc qui le bloque, ou il n'est pas dans le plateau de jeu) !");
+                    }
+                    break;
             }
             u++;
         }
@@ -584,6 +592,7 @@ void afficher_bloc(plateau plat, int * indices_blocs){
         break;
     }
 
+    printf("\n\n");
     switch(plat.politique){
     case 1:
         for(int i = 0; i < 4; i ++){
@@ -719,16 +728,87 @@ void afficher_bloc(plateau plat, int * indices_blocs){
         }
         break;
     }
+    printf("\n\n");
 }
 
-int convert_lettre_nombre(char lettre){                         // Converssion des coordonnées données par l'utilisateur en indices utilisables par les tableaux
-    int nombre;
-    if(lettre >= 65 && lettre <= 90){
-        nombre = lettre-65;
-    } else if(lettre >= 97 && lettre <= 122){
-        nombre = lettre-97;
+int selection_bloc(int* indices_blocs, plateau jeu){            // Demande à l'utilisateur de choisir un bloc dans la liste
+    int indice_retour;                                          // indice_retour renverra l'indice du bloc choisi pour pouvoir le sélectionner dans les tableaux selon la politique
+    int max;                                                    // max correspond à l'indice maximum que l'utilisateur peut choisir, selon la politique et la forme du plateau
+    if(jeu.politique == 1){
+        switch(jeu.forme){
+            case 1:
+                max = 31;
+                break;
+            case 2:
+                max = 33;
+                break;
+            case 3:
+                max = 30;
+                break;
+        }
+    }else if(jeu.politique == 2){
+        max = 2;
     }
-    return nombre;
+    do{
+        printf("\nChoisissez un bloc a poser parmi la liste ci-dessus : ");
+        scanf("%d",&indice_retour);
+    }while(indice_retour < 0 || indice_retour > max);
+    return indice_retour;
+}
+
+int selection_coos_ligne(plateau jeu){
+    char ligne_lettre;
+    int ligne, max;
+    int erreur = 1;                                             // erreur est la variable servant pour boucler la demande de coordonnee
+    switch(jeu.forme){                                          // On vérifie que le maximum de ligne s'adapte à la forme choisie
+        case 1:
+            max = jeu.taille;
+            break;
+        case 2:
+            max = jeu.taille;
+            break;
+        case 3:
+            max = jeu.taille/2+1;
+            break;
+    }
+    do{
+        fflush(stdin);                                          // On vide le buffer pour ne pas prendre en compte le ENTER du dernier scanf
+        printf("\nLettre de la ligne sur laquelle placer le bloc : ");
+        scanf("%c",&ligne_lettre);
+        if(ligne_lettre >= 65 && ligne_lettre <= 90){
+            ligne = ligne_lettre-65;
+            if(ligne < 0 || ligne >= max){
+                erreur = 1;
+            } else {
+                erreur = 0;
+            }
+        } else {
+            erreur = 1;
+        }
+    }while(erreur);
+    return ligne;
+}
+
+int selection_coos_colonne(plateau jeu){
+    char colonne_lettre;
+    int colonne;
+    int erreur = 1;                                             // erreur est la variable servant pour boucler la demande de coordonnee
+    do{
+        fflush(stdin);                                          // On vide le buffer pour ne pas prendre en compte le ENTER du dernier scanf
+        printf("\nLettre de la colonne sur laquelle placer le bloc : ");
+        scanf("%c",&colonne_lettre);
+        if(colonne_lettre >= 97 && colonne_lettre <= 122){
+            colonne = colonne_lettre-97;
+            if(colonne < 0 || colonne >= jeu.taille){
+                erreur = 1;
+            } else {
+                erreur = 0;
+            }
+        } else {
+            erreur = 1;
+        }
+    }while(erreur);
+    return colonne;
 }
 
 void selectionner_blocs(int * indices_blocs, plateau jeu){      // Rempli un tableau de 3 valeurs avec 3 indices aléatoires dans le tableau global des blocs
