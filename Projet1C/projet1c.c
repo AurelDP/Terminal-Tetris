@@ -838,6 +838,41 @@ void selectionner_blocs(int * indices_blocs, plateau jeu){      // Rempli un tab
     }
 }
 
+plateau placer_bloc(plateau jeu, int l, int c, int choix_bloc, int* indices_blocs){
+    int taille_bloc = 0;
+    switch(jeu.forme){
+        case 1: // Cercle
+            taille_bloc = 5;
+            break;
+        case 2: // Losange
+            taille_bloc = 5;
+            break;
+        case 3: // Triangle
+            taille_bloc = 3;
+            break;
+    }
+    if((choix_bloc < 20 && jeu.politique == 1) || (indices_blocs[choix_bloc] < 20 && jeu.politique == 2)){          // Si le bloc � poser est un bloc universel, le maximum de blocs qui le composent est de 4 en largeur
+        taille_bloc = 4;
+    }
+    for(int i = taille_bloc-1; i >= 0; i--){
+        for(int u = 0; u < taille_bloc; u++){
+            switch(jeu.politique){
+                case 1:
+                    if(jeu.liste_blocs[choix_bloc][i][u] == 1){
+                        jeu.tab[l-(taille_bloc-1-i)][c+u] = 2;
+                    }
+                    break;
+                case 2:
+                    if(jeu.liste_blocs[indices_blocs[choix_bloc]][i][u] == 1){
+                        jeu.tab[l-(taille_bloc-1-i)][c+u] = 2;
+                    }
+                    break;
+            }
+        }
+    }
+    return jeu;
+}
+
 int etat_ligne(plateau jeu, int l){
     int compteur = 0;
     int u = 0;
