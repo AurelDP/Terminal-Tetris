@@ -1379,8 +1379,8 @@ int ** creer_bloc_tri_7(int l, int c){
 int ** creer_bloc_tri_8(int l, int c){
     int** tab = creer_tab2D_dyn(l,c);
     tab[0][0] = 0; tab[0][1] = 0; tab[0][2] = 0;
-    tab[1][0] = 1; tab[1][1] = 1; tab[1][2] = 1;
-    tab[2][0] = 0; tab[2][1] = 0; tab[2][2] = 0;
+    tab[1][0] = 0; tab[1][1] = 0; tab[1][2] = 0;
+    tab[2][0] = 1; tab[2][1] = 1; tab[2][2] = 1;
     return tab;
 }
 
