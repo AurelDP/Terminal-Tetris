@@ -7,7 +7,7 @@ int main(){
 
     // Déclaration des variables utilisées
     int choix;
-    int indices_blocs[3] = {0};
+    int indices_blocs[3] = {0}; // Dans le cas où la politique choisie est 2 (3 blocs aléatoires)
 
     // Affichage de l'accueil et sélection du choix du joueur
     printf("#############################\n   Comme un air de Tetris\n#############################\n\n");
@@ -66,7 +66,7 @@ int main(){
 
         init_blocs(&jeu);
         if(jeu.politique == 2){
-            random_blocs(indices_blocs, jeu);
+            selectionner_blocs(indices_blocs, jeu);
         }
         afficher_plateau(jeu);
 
