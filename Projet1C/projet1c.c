@@ -530,21 +530,30 @@ int verif_validite(plateau jeu, int l, int c, int choix_bloc){
     int taille_bloc = 0;
     switch(jeu.forme){
         case 1: // Cercle
+            if((l < 0 || l >= jeu.taille) || (c < 0 || c >= jeu.taille)){   // Si les coordonnées entrées ne sont pas dans le plateau de jeu
+                retour = 0;
+            }
             taille_bloc = 5;
             break;
         case 2: // Losange
+            if((l < 0 || l >= jeu.taille) || (c < 0 || c >= jeu.taille)){
+                retour = 0;
+            }
             taille_bloc = 5;
             break;
         case 3: // Triangle
+            if((l < 0 || l >= jeu.taille/2+1) || (c < 0 || c >= jeu.taille)){ // Utilisation de jeu.taille/2+1 car le triangle est deux fois moins haut
+                retour = 0;
+            }
             taille_bloc = 4;
             break;
     }
     i = taille_bloc-1;
     while(i > 0 && retour == 2){
         while(u < taille_bloc && retour == 2){
-            if((l-(taille_bloc-1-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){ // On détermine la position de chaque bloc plein du bloc et on regarde si ça sort du plateau
-                retour = 0;                                                                    // ici, l-(taille_bloc-1-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 = taille_bloc-1 (dans le cas du cercle)
-            } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l+i][c+u] != 1){       // On vérifie la valeur présent sur le plateau
+            if((l-(taille_bloc-1-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){  // On détermine la position de chaque bloc plein du bloc et on regarde si ça sort du plateau
+                retour = 0;                                                                                 // ici, l-(taille_bloc-1-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 = taille_bloc-1 (dans le cas du cercle)
+            } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l+i][c+u] != 1){                    // On vérifie la valeur présent sur le plateau
                 retour = 0;
             }
             u++;
