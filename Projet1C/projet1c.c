@@ -952,6 +952,62 @@ plateau annuler_colonne(plateau jeu, int c){    // Même principe que pour annule
     return jeu;
 }
 
+int choix_debut(){
+    int choix;
+    printf("#############################\n   Comme un air de Tetris\n#############################\n\n");
+    printf("1) Commencer a jouer\n2) Afficher les regles du jeu\nIndiquez votre choix : ");
+    scanf("%d",&choix);
+    while(choix != 1 && choix != 2){
+        printf("\nLe choix ne correspond pas aux propositions ...\nIndiquez votre choix : ");
+        scanf("%d",&choix);
+    }
+    return choix;
+}
+
+int affichage_regles(){
+    printf("\n\n");
+    printf("Le Tetris est un jeu qui se presente sous forme d'une matrice ou des blocs de differentes formes \n"
+           "doivent etre poses de sorte que le plateau soit garde le plus longtemps possible non plein. \n"
+           "L'idee est de placer chaque bloc a l'emplacement qui permet d'eliminer un maximum de lignes et/ou \n"
+           "de colonnes. Ces dernieres sont supprimees automatiquement lorsqu'elles sont pleines.\n"
+           "Ici, vous devrez placer les blocs qui vous seront fournis, dans un plateau d'une forme specifique.\n"
+           "Bonne chance !\n\n");
+    system("PAUSE");
+    return 1;
+}
+
+plateau choix_plateau(plateau jeu){
+    printf("\n\n");
+
+    do{
+        printf("Taille de votre plateau (entre 21 et 25 compris, seulement en nombres impairs) : ");
+        scanf("%d", &jeu.taille);
+    }while(jeu.taille < 21 || jeu.taille > 25 || jeu.taille%2 == 0);
+
+    do{
+        printf("\nForme de votre plateau \n1 : Cercle | 2 : Losange | 3 : Triangle \nVotre choix : ");
+        scanf("%d", &jeu.forme);
+    }while(jeu.forme != 1 && jeu.forme != 2 && jeu.forme != 3);
+
+    return jeu;
+}
+
+plateau choix_politique(plateau jeu){
+    do{
+        printf("\nPolitique de jeu \n1 : Afficher a chaque tour de jeu l'ensemble des blocs disponibles et selection d'un seul a poser \n2 : Afficher uniquement 3 blocs selectionnes aleatoirement \nVotre choix : ");
+        scanf("%d", &jeu.politique);
+    }while(jeu.politique != 1 && jeu.politique != 2);
+    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    return jeu;
+}
+
+void message_fin(plateau jeu){
+    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    printf("#############################\n   Comme un air de Tetris\n#############################\n\n");
+    printf("Vous n'avez plus de tentative...\nFin de la partie !\nVotre score : %d",jeu.score);
+    printf("\n\nMerci de votre participation !\n\n");
+}
+
 // -------------------------------------------------------------------------
 
 //UNIVERSEL
