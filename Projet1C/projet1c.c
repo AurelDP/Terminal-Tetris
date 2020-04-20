@@ -961,6 +961,41 @@ plateau annuler_colonne(plateau jeu, int c){    // Même principe que pour annule
     return jeu;
 }
 
+plateau decaler_lignes(plateau jeu, int i){
+    int * ligne_chute; // tableau qui enregistre l'ordonnée où doivent être posé les potentiels blocs de cette ligne
+    int cpt, taille_max;
+
+    if(jeu.forme == 3){ // on prend en considération le terrain triangulaire
+        taille_max = (jeu.taille/2)+1;
+    }else{
+        taille_max = jeu.taille;
+    }
+    ligne_chute = (int *) malloc(jeu.taille * sizeof(int));
+    afficher_plateau(jeu);
+    for(int j = 0; j < jeu.taille; j++){ // on se deplace sur la ligne effacée
+        ligne_chute[j] = i;
+        while(ligne_chute[j] < taille_max && jeu.tab[ligne_chute[j]][j] == 1){ // on test les cases en dessous voir où les blocs du dessus doivent tomber
+            ligne_chute[j] ++;
+        }
+        ligne_chute[j] --;
+    }
+    for(int j = 0; j < jeu.taille; j++){
+        cpt = 0;
+        for(int k = i; k >= 0; k--){// on compte le nombre de blocs au dessus de la ligne effacée pour chaque indices
+            if(jeu.tab[k][j] == 2){
+                jeu.tab[k][j] = 1;
+                cpt += 1;
+            }
+        }
+        for(int k = ligne_chute[j]; k > ligne_chute[j]-cpt; k--){
+            jeu.tab[k][j] = 2; // on réaffiche les blocs à partir des l'odonné enregistré
+        }
+    }
+
+    free(ligne_chute);
+    return(jeu);
+}
+
 int choix_debut(){
     int choix;
     printf("#############################\n   Comme un air de Tetris\n#############################\n\n");

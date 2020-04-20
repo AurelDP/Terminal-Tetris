@@ -66,12 +66,14 @@ int main(){
                     for(int i = 0; i < jeu.taille; i++){
                         if(etat_ligne(jeu, i)){
                             jeu = annuler_ligne(jeu, i);
+                            jeu = decaler_lignes(jeu, i);
                         }
                     }
                 }else if(jeu.forme == 3){
-                    for(int i = 0; i < jeu.taille/2+1; i++){
+                    for(int i = 0; i < (jeu.taille/2)+1; i++){
                         if(etat_ligne(jeu, i)){
                             jeu = annuler_ligne(jeu, i);
+                            jeu = decaler_lignes(jeu, i);
                         }
                     }
                 }

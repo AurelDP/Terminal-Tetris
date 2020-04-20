@@ -41,6 +41,7 @@ int etat_colonne(plateau jeu, int c);
 
 plateau annuler_ligne(plateau jeu, int l);
 plateau annuler_colonne(plateau jeu, int c);
+plateau decaler_lignes(plateau jeu, int i);
 
 int choix_debut();
 int affichage_regles();
