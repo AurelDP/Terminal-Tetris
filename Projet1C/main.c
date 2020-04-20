@@ -68,10 +68,16 @@ int main(){
                             jeu = annuler_ligne(jeu, i);
                         }
                     }
-                    for(int u = 0; u < jeu.taille; u++){
-                        if(etat_colonne(jeu, u)){
-                            jeu = annuler_colonne(jeu, u);
+                }else if(jeu.forme == 3){
+                    for(int i = 0; i < jeu.taille/2+1; i++){
+                        if(etat_ligne(jeu, i)){
+                            jeu = annuler_ligne(jeu, i);
                         }
+                    }
+                }
+                for(int u = 0; u < jeu.taille; u++){
+                    if(etat_colonne(jeu, u)){
+                        jeu = annuler_colonne(jeu, u);
                     }
                 }
             }
