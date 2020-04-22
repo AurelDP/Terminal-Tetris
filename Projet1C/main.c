@@ -9,7 +9,7 @@ int main(){
     int jouer = 1;
     int indice_choix, ligne, colonne;
     int tentative = 1;
-    plateau jeu = {NULL, NULL, 0, 0, 0};
+    plateau jeu = {NULL, NULL, 0, 0, 0, 0};
 
     // Affichage de l'accueil et sélection du choix du joueur
     choix = choix_debut();
