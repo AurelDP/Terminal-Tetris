@@ -12,6 +12,7 @@ typedef struct{
 } plateau;
 
 int** creer_tab2D_dyn(int taille_x, int taille_y);
+void free_2D_array(int **A, int l, int c);
 
 plateau creer_plat_crc(int l, int c, plateau jeu);
 plateau creer_plat_los(int l, int c, plateau jeu);

@@ -86,5 +86,27 @@ int main(){
         }
         message_fin(jeu);
     }
+    if(jeu.forme == 3)
+        free_2D_array(jeu.tab, (jeu.taille/2)+1, jeu.taille);
+    else
+        free_2D_array(jeu.tab, jeu.taille, jeu.taille);
+
+    if(jeu.forme == 3){
+        for(int i = 0; i < 20; i++){
+            free_2D_array(jeu.liste_blocs[i], 4, 4);
+        }
+        for(int i = 20; i < 31; i++){
+            free_2D_array(jeu.liste_blocs[i], 3, 3);
+        }
+        free(jeu.liste_blocs);
+    }else{
+        for(int i = 0; i < 20; i++){
+            free_2D_array(jeu.liste_blocs[i], 4, 4);
+        }
+        for(int i = 20; i < 31; i++){
+            free_2D_array(jeu.liste_blocs[i], 5, 5);
+        }
+        free(jeu.liste_blocs);
+    }
     return(0);
 }

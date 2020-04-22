@@ -14,6 +14,14 @@ int** creer_tab2D_dyn(int taille_x, int taille_y){
     return tab;
 }
 
+void free_2D_array(int **A, int l, int c)
+{
+    int i;
+    for(i=0;i<l;i++)
+        free (A[i]);
+    free (A);
+}
+
 // Algorithme de tracé d'arc de cercle de Bresenham
 plateau creer_plat_crc(int l, int c, plateau jeu){
     jeu.tab = creer_tab2D_dyn(l,c);
