@@ -14,41 +14,40 @@ typedef struct{
 int** creer_tab2D_dyn(int taille_x, int taille_y);
 void free_2D_array(int **A, int l, int c);
 
-plateau creer_plat_crc(int l, int c, plateau jeu);
-plateau creer_plat_los(int l, int c, plateau jeu);
-plateau creer_plat_tri(int l, int c, plateau jeu);
+void creer_plat_crc(plateau* jeu);
+void creer_plat_los(plateau* jeu);
+void creer_plat_tri(plateau* jeu);
 
-int** remplir_case_tab(int i, plateau jeu);
+int** remplir_case_tab(int i, plateau* jeu);
 
 int score_chiffres(int sc);
-plateau calcul_score(plateau jeu);
-void afficher_plateau(plateau jeu);
+void calcul_score(plateau* jeu);
+void afficher_plateau(plateau* jeu);
 
-void afficher_plateau(plateau jeu);
 void init_blocs(plateau * plat);
-int verif_validite(plateau jeu, int l, int c, int choix_bloc, int* indices_blocs);
+int verif_validite(plateau* jeu, int l, int c, int choix_bloc, int* indices_blocs);
 void afficher_bloc(plateau plat, int * indices_blocs);
 
-int selection_bloc(int* indices_blocs, plateau jeu, int tentative);
-int selection_coos_ligne(plateau jeu);
-int selection_coos_colonne(plateau jeu);
+int selection_bloc(int* indices_blocs, plateau* jeu, int tentative);
+int selection_coos_ligne(plateau* jeu);
+int selection_coos_colonne(plateau* jeu);
 
 void selectionner_blocs(int * indices_blocs, plateau jeu);
 
-plateau placer_bloc(plateau jeu, int x, int y, int choix_bloc, int* indices_blocs);
+void placer_bloc(plateau* jeu, int x, int y, int choix_bloc, int* indices_blocs);
 
-int etat_ligne(plateau jeu, int l);
-int etat_colonne(plateau jeu, int c);
+int etat_ligne(plateau* jeu, int l);
+int etat_colonne(plateau* jeu, int c);
 
-plateau annuler_ligne(plateau jeu, int l);
-plateau annuler_colonne(plateau jeu, int c);
+void annuler_ligne(plateau* jeu, int l);
+void annuler_colonne(plateau* jeu, int c);
 plateau decaler_lignes(plateau jeu, int i);
 
 int choix_debut();
 int affichage_regles();
-plateau choix_plateau(plateau jeu);
-plateau choix_politique(plateau jeu);
-void message_fin(plateau jeu);
+void choix_plateau(plateau* jeu);
+void choix_politique(plateau* jeu);
+void message_fin(plateau* jeu);
 
 //UNIVERSEL
 int ** creer_bloc_uni_1(int l, int c);

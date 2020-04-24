@@ -23,19 +23,19 @@ int main(){
     if(choix == 1){
 
         // Choix de la taille et de la forme du plateau
-        jeu = choix_plateau(jeu);
+        choix_plateau(&jeu);
 
         // Création du plateau en fonction de la forme choisie
         if(jeu.forme == 1){
-            jeu = creer_plat_crc(jeu.taille, jeu.taille, jeu);
+            creer_plat_crc(&jeu);
         } else if(jeu.forme == 2){
-            jeu = creer_plat_los(jeu.taille, jeu.taille, jeu);
+            creer_plat_los(&jeu);
         } else if(jeu.forme == 3){
-            jeu = creer_plat_tri(jeu.taille/2+1, jeu.taille, jeu);
+            creer_plat_tri(&jeu);
         }
 
         // Choix de la politique de jeu (façon de jouer)
-        jeu = choix_politique(jeu);
+        choix_politique(&jeu);
 
         // Initialisation du plateau accueillant les blocs du jeu en fonction de la forme choisie
         init_blocs(&jeu);
@@ -45,46 +45,46 @@ int main(){
             if(jeu.politique == 2){
                 selectionner_blocs(indices_blocs, jeu);
             }
-            afficher_plateau(jeu);
+            afficher_plateau(&jeu);
             afficher_bloc(jeu, indices_blocs);
 
             tentative = 1;
             do{
-                indice_choix = selection_bloc(indices_blocs, jeu, tentative);
-                ligne = selection_coos_ligne(jeu);
-                colonne = selection_coos_colonne(jeu);
+                indice_choix = selection_bloc(indices_blocs, &jeu, tentative);
+                ligne = selection_coos_ligne(&jeu);
+                colonne = selection_coos_colonne(&jeu);
                 tentative ++;
-            }while(!verif_validite(jeu, ligne, colonne, indice_choix, indices_blocs) && tentative <= 3);
+            }while(!verif_validite(&jeu, ligne, colonne, indice_choix, indices_blocs) && tentative <= 3);
 
             if(tentative == 4){
                 jouer = 0;
             }
 
             if(jouer){
-                jeu = placer_bloc(jeu, ligne, colonne, indice_choix, indices_blocs);
+                placer_bloc(&jeu, ligne, colonne, indice_choix, indices_blocs);
                 if(jeu.forme == 1 || jeu.forme == 2){
                     for(int i = 0; i < jeu.taille; i++){
-                        if(etat_ligne(jeu, i)){
-                            jeu = annuler_ligne(jeu, i);
+                        if(etat_ligne(&jeu, i)){
+                            annuler_ligne(&jeu, i);
                             jeu = decaler_lignes(jeu, i);
                         }
                     }
                 }else if(jeu.forme == 3){
                     for(int i = 0; i < (jeu.taille/2)+1; i++){
-                        if(etat_ligne(jeu, i)){
-                            jeu = annuler_ligne(jeu, i);
+                        if(etat_ligne(&jeu, i)){
+                            annuler_ligne(&jeu, i);
                             jeu = decaler_lignes(jeu, i);
                         }
                     }
                 }
                 for(int u = 0; u < jeu.taille; u++){
-                    if(etat_colonne(jeu, u)){
-                        jeu = annuler_colonne(jeu, u);
+                    if(etat_colonne(&jeu, u)){
+                        annuler_colonne(&jeu, u);
                     }
                 }
             }
         }
-        message_fin(jeu);
+        message_fin(&jeu);
     }
     if(jeu.forme == 3)
         free_2D_array(jeu.tab, (jeu.taille/2)+1, jeu.taille);

@@ -23,16 +23,16 @@ void free_2D_array(int **A, int l, int c)
 }
 
 // Algorithme de tracé d'arc de cercle de Bresenham
-plateau creer_plat_crc(int l, int c, plateau jeu){
-    jeu.tab = creer_tab2D_dyn(l,c);
-    int xCenter = l/2;
-    int yCenter = l/2;
-    int y = l/2;
+void creer_plat_crc(plateau* jeu){
+    jeu->tab = creer_tab2D_dyn(jeu->taille,jeu->taille);
+    int xCenter = jeu->taille/2;
+    int yCenter = jeu->taille/2;
+    int y = jeu->taille/2;
     int x = 0;
-    int m = 3 - (2 * l/2);
+    int m = 3 - (2 * jeu->taille/2);
     int valid;
     int compteur;
-    jeu.tab[x + xCenter][y - yCenter] = 1;
+    jeu->tab[x + xCenter][y - yCenter] = 1;
     for(x = 0; x <= y; x++){
         if(m < 0){
             m = m + (4 * x) + 6;
@@ -40,25 +40,25 @@ plateau creer_plat_crc(int l, int c, plateau jeu){
             y -= 1;
             m += 4*(x-y) + 10;
         }
-        jeu.tab[x + xCenter][y + yCenter]   = 1;
-        jeu.tab[y + xCenter][x + yCenter]   = 1;
-        jeu.tab[-x + xCenter][y + yCenter]  = 1;
-        jeu.tab[-y + xCenter][x + yCenter]  = 1;
-        jeu.tab[x + xCenter][-y + yCenter]  = 1;
-        jeu.tab[y + xCenter][-x + yCenter]  = 1;
-        jeu.tab[-x + xCenter][-y + yCenter] = 1;
-        jeu.tab[-y + xCenter][-x + yCenter] = 1;
+        jeu->tab[x + xCenter][y + yCenter]   = 1;
+        jeu->tab[y + xCenter][x + yCenter]   = 1;
+        jeu->tab[-x + xCenter][y + yCenter]  = 1;
+        jeu->tab[-y + xCenter][x + yCenter]  = 1;
+        jeu->tab[x + xCenter][-y + yCenter]  = 1;
+        jeu->tab[y + xCenter][-x + yCenter]  = 1;
+        jeu->tab[-x + xCenter][-y + yCenter] = 1;
+        jeu->tab[-y + xCenter][-x + yCenter] = 1;
     }
-    for(int i = 0; i < l; i++){
+    for(int i = 0; i < jeu->taille; i++){
         valid = 0;
-        if(i > 0 && i < l-1){
+        if(i > 0 && i < jeu->taille-1){
             valid = 1;
             compteur = 0;
-            for(int u = 0; u < l-1; u++){
-                if(((jeu.tab[i][u] == 0 && jeu.tab[i][u+1] == 0) || (jeu.tab[i][u] == 0 && jeu.tab[i][u+1] == 1) || (jeu.tab[i][u] == 1 && jeu.tab[i][u+1] == 1)) && valid == 1 && compteur == 0){
+            for(int u = 0; u < jeu->taille-1; u++){
+                if(((jeu->tab[i][u] == 0 && jeu->tab[i][u+1] == 0) || (jeu->tab[i][u] == 0 && jeu->tab[i][u+1] == 1) || (jeu->tab[i][u] == 1 && jeu->tab[i][u+1] == 1)) && valid == 1 && compteur == 0){
                     valid = 1;
-                } else if(jeu.tab[i][u] == 1 && jeu.tab[i][u+1] == 0 && valid == 1){
-                    jeu.tab[i][u+1] = 1;
+                } else if(jeu->tab[i][u] == 1 && jeu->tab[i][u+1] == 0 && valid == 1){
+                    jeu->tab[i][u+1] = 1;
                     valid = 1;
                     compteur ++;
                 } else {
@@ -67,53 +67,50 @@ plateau creer_plat_crc(int l, int c, plateau jeu){
             }
         }
     }
-    return jeu;
 }
 
-plateau creer_plat_los(int l, int c, plateau jeu){
-    jeu.tab = creer_tab2D_dyn(l,c);
+void creer_plat_los(plateau* jeu){
+    jeu->tab = creer_tab2D_dyn(jeu->taille,jeu->taille);
     int ligne,compteur;
     int decalage_ligne = 1;
-    int colonne = l/2;
-    for(ligne = 0; ligne < l/2+1; ligne++){
+    int colonne = jeu->taille/2;
+    for(ligne = 0; ligne < jeu->taille/2+1; ligne++){
         for(compteur = 0; compteur < decalage_ligne; compteur++){
-            jeu.tab[ligne][colonne] = 1;
+            jeu->tab[ligne][colonne] = 1;
             colonne++;
         }
         decalage_ligne += 2;
-        colonne = (l/2)-(ligne+1);
+        colonne = (jeu->taille/2)-(ligne+1);
     }
     colonne = 0;
     decalage_ligne -= 2;
-    for(ligne = l/2; ligne < l; ligne++){
+    for(ligne = jeu->taille/2; ligne < jeu->taille; ligne++){
         for(compteur = 0; compteur < decalage_ligne; compteur++){
-            jeu.tab[ligne][colonne] = 1;
+            jeu->tab[ligne][colonne] = 1;
             colonne++;
         }
         decalage_ligne -= 2;
         colonne = colonne - compteur+1;
     }
-    return jeu;
 }
 
-plateau creer_plat_tri(int l, int c, plateau jeu){
-    jeu.tab = creer_tab2D_dyn(l,c);
+void creer_plat_tri(plateau* jeu){
+    jeu->tab = creer_tab2D_dyn(jeu->taille/2+1,jeu->taille);
     int ligne,compteur;
     int decalage_ligne = 1;
-    int colonne = l-1;
-    for(ligne = 0; ligne < l; ligne++){
+    int colonne = jeu->taille/2;
+    for(ligne = 0; ligne < jeu->taille/2+1; ligne++){
         for(compteur = 0; compteur < decalage_ligne; compteur++){
-            jeu.tab[ligne][colonne] = 1;
+            jeu->tab[ligne][colonne] = 1;
             colonne++;
         }
         decalage_ligne += 2;
-        colonne = (l-1)-(ligne+1);
+        colonne = (jeu->taille/2)-(ligne+1);
     }
-    return jeu;
 }
 
-int** remplir_case_tab(int i, plateau jeu){
-    if(jeu.forme == 1){             // Si le plateau de jeu est un cercle
+int** remplir_case_tab(int i, plateau* jeu){
+    if(jeu->forme == 1){             // Si le plateau de jeu est un cercle
         switch(i){
             case 0:
                 return creer_bloc_uni_1(4,4);
@@ -212,7 +209,7 @@ int** remplir_case_tab(int i, plateau jeu){
                 return creer_bloc_crc_12(5,5);
                 break;
         }
-    } else if(jeu.forme == 2){      // Si le plateau de jeu est un losange
+    } else if(jeu->forme == 2){      // Si le plateau de jeu est un losange
         switch(i){
             case 0:
                 return creer_bloc_uni_1(4,4);
@@ -317,7 +314,7 @@ int** remplir_case_tab(int i, plateau jeu){
                 return creer_bloc_los_14(5,5);
                 break;
         }
-    } else if(jeu.forme == 3){      // Si le plateau de jeu est un triangle
+    } else if(jeu->forme == 3){      // Si le plateau de jeu est un triangle
         switch(i){
             case 0:
                 return creer_bloc_uni_1(4,4);
@@ -425,77 +422,76 @@ int score_chiffres(int sc){
     return nb;
 }
 
-plateau calcul_score(plateau jeu){
-    jeu.score++;
-    return jeu;
+void calcul_score(plateau* jeu){
+    jeu->score++;
 }
 
-void afficher_plateau(plateau jeu){
+void afficher_plateau(plateau* jeu){
     printf("\n\n     ");
     int w;
-    for(w = 97; w < 97+jeu.taille; w++){            // Affichage des lettres en haut du plateau avec le code ASCII
+    for(w = 97; w < 97+jeu->taille; w++){            // Affichage des lettres en haut du plateau avec le code ASCII
         printf("%c ",w);
     }
     printf("\n");
     printf("   %c%c",201,205);
-    for(w = 0; w < jeu.taille; w++){                // Affichage des lignes sous les lettres
+    for(w = 0; w < jeu->taille; w++){                // Affichage des lignes sous les lettres
         printf("%c%c",205,205);
     }
     printf("%c\n",187);
-    if(jeu.forme == 1 || jeu.forme == 2){           // Différenciation Cercle et Losange avec Triangle car hauteur différente
-        for(int i = 0; i < jeu.taille; i++){
+    if(jeu->forme == 1 || jeu->forme == 2){           // Différenciation Cercle et Losange avec Triangle car hauteur différente
+        for(int i = 0; i < jeu->taille; i++){
             printf(" %c %c ",i+65,186);             // Affichage de la lettre et du séparateur de chaque ligne
-            for(int u = 0; u < jeu.taille; u++){    // Affichage du plateau (jeu.tab)
-                if(jeu.tab[i][u] == 0){
+            for(int u = 0; u < jeu->taille; u++){    // Affichage du plateau (jeu.tab)
+                if(jeu->tab[i][u] == 0){
                     printf("  ");
-                } else if(jeu.tab[i][u] == 1){
+                } else if(jeu->tab[i][u] == 1){
                     printf("%c ",250);
-                } else if(jeu.tab[i][u] == 2){
+                } else if(jeu->tab[i][u] == 2){
                     printf("%c ",254);
                 }
             }
             printf("%c",186);
             if(i == 3){                             // Affichage du score en fonction de la ligne
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(jeu.score); u++){
+                for(int u = 0; u < score_chiffres(jeu->score); u++){
                     printf("%c",196);               // Calcul et affichage du bon nombre de tirets pour centrer le texte, peut importe le score (fonction score_chiffres calcul le nombre de chiffres dans le score)
                 }
                 printf("%c%c%c",196,196,196);
             } else if(i == 4){                      // Affichage du score à l'aide de jeu.score, variable elle-même modifiée par calcul_score
-                printf("      Score : %d   ",jeu.score);
+                printf("      Score : %d   ",jeu->score);
             } else if(i == 5){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(jeu.score); u++){
+                for(int u = 0; u < score_chiffres(jeu->score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
             }
             printf("\n");
         }
-    } else if(jeu.forme == 3){                      // Si la forme est un triangle, même principe mais avec une hauteur divisée par 2
-        for(int i = 0; i < jeu.taille/2+1; i++){
+    } else if(jeu->forme == 3){                      // Si la forme est un triangle, même principe mais avec une hauteur divisée par 2
+        for(int i = 0; i < jeu->taille/2+1; i++){
             printf(" %c %c ",i+65,186);
-            for(int u = 0; u < jeu.taille; u++){
-                if(jeu.tab[i][u] == 0){
+            for(int u = 0; u < jeu->taille; u++){
+                if(jeu->tab[i][u] == 0){
                     printf("  ");
-                } else if(jeu.tab[i][u] == 1){
+                } else if(jeu->tab[i][u] == 1){
                     printf("%c ",250);
-                } else if(jeu.tab[i][u] == 2){
+                } else if(jeu->tab[i][u] == 2){
                     printf("%c ",254);
                 }
             }
             printf("%c",186);
             if(i == 3){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(jeu.score); u++){
+                for(int u = 0; u < score_chiffres(jeu->score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
             } else if(i == 4){
-                printf("      Score : %d   ",jeu.score);
+                printf("      Score : %d   ",jeu->score);
             } else if(i == 5){
                 printf("   %c%c%c%c%c%c%c%c%c%c%c",196,196,196,196,196,196,196,196,196,196,196);
-                for(int u = 0; u < score_chiffres(jeu.score); u++){
+                for(int u = 0; u < score_chiffres(jeu->score); u++){
                     printf("%c",196);
                 }
                 printf("%c%c%c",196,196,196);
@@ -504,7 +500,7 @@ void afficher_plateau(plateau jeu){
         }
     }
     printf("   %c%c",200,205);                      // Affichage des séparateurs finaux
-    for(w = 0; w < jeu.taille; w++){
+    for(w = 0; w < jeu->taille; w++){
         printf("%c%c",205,205);
     }
     printf("%c\n\n",188);
@@ -526,15 +522,15 @@ void init_blocs(plateau * plat){
 
     plat -> liste_blocs = (int ***) malloc(nb_blocs * sizeof(int**));
     for(int i = 0; i < nb_blocs; i++){
-        plat -> liste_blocs[i] = remplir_case_tab(i, *plat);
+        plat -> liste_blocs[i] = remplir_case_tab(i, plat);
     }
 }
 
-int verif_validite(plateau jeu, int l, int c, int choix_bloc, int* indices_blocs){
+int verif_validite(plateau* jeu, int l, int c, int choix_bloc, int* indices_blocs){
     int retour = 2;
     int i,u;
     int taille_bloc = 0;
-    switch(jeu.forme){
+    switch(jeu->forme){
         case 1: // Cercle
             taille_bloc = 5;
             break;
@@ -545,28 +541,28 @@ int verif_validite(plateau jeu, int l, int c, int choix_bloc, int* indices_blocs
             taille_bloc = 3;
             break;
     }
-    if((choix_bloc < 20 && jeu.politique == 1) || (indices_blocs[choix_bloc] < 20 && jeu.politique == 2)){          // Si le bloc à poser est un bloc universel, le maximum de blocs qui le composent est de 4 en largeur
+    if((choix_bloc < 20 && jeu->politique == 1) || (indices_blocs[choix_bloc] < 20 && jeu->politique == 2)){          // Si le bloc à poser est un bloc universel, le maximum de blocs qui le composent est de 4 en largeur
         taille_bloc = 4;
     }
     i = taille_bloc-1;
     while(i >= 0 && retour == 2){
         u = 0;
         while(u < taille_bloc && retour == 2){
-            switch(jeu.politique){
+            switch(jeu->politique){
                 case 1:                                                                                             // Si la politique est normale et que tous les blocs sont affichés
-                    if((l-(taille_bloc-1-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[choix_bloc][i][u] == 1){  // On détermine la position de chaque bloc plein du bloc et on regarde si ça sort du plateau
+                    if((l-(taille_bloc-1-i) < 0 || c+u > jeu->taille-1) && jeu->liste_blocs[choix_bloc][i][u] == 1){  // On détermine la position de chaque bloc plein du bloc et on regarde si ça sort du plateau
                         retour = 0;                                                                                 // ici, l-(taille_bloc-1-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 = taille_bloc-1 (dans le cas du cercle)
                         printf("\n\nErreur : Une des cases du bloc sort du plateau de jeu, ou le bloc sort des limites du jeu !\n");
-                    } else if(jeu.liste_blocs[choix_bloc][i][u] == 1 && jeu.tab[l-(taille_bloc-1-i)][c+u] != 1){    // On vérifie la valeur présente sur le plateau
+                    } else if(jeu->liste_blocs[choix_bloc][i][u] == 1 && jeu->tab[l-(taille_bloc-1-i)][c+u] != 1){    // On vérifie la valeur présente sur le plateau
                         retour = 0;
                         printf("\n\nErreur : Le bloc ne peut pas se placer ici (il y a surement un autre bloc qui le bloque, ou il n'est pas dans le plateau de jeu) !\n");
                     }
                     break;
                 case 2:                                                                                                             // Si seuls 3 blocs aléatoires sont affichés
-                    if((l-(taille_bloc-1-i) < 0 || c+u > jeu.taille-1) && jeu.liste_blocs[indices_blocs[choix_bloc]][i][u] == 1){   // On détermine la position de chaque bloc plein du bloc grâce à son indice dans le tableau des blocs aléatoires et on regarde si ça sort du plateau
+                    if((l-(taille_bloc-1-i) < 0 || c+u > jeu->taille-1) && jeu->liste_blocs[indices_blocs[choix_bloc]][i][u] == 1){   // On détermine la position de chaque bloc plein du bloc grâce à son indice dans le tableau des blocs aléatoires et on regarde si ça sort du plateau
                         retour = 0;                                                                                                 // ici, l-(taille_bloc-1-i) car c'est un décompte inversé, sachant que le l donné est en bas du bloc, i commence à 4 = taille_bloc-1 (dans le cas du cercle)
                         printf("\n\nErreur : Une des cases du bloc sort du plateau de jeu, ou le bloc sort des limites du jeu !\n");
-                    } else if(jeu.liste_blocs[indices_blocs[choix_bloc]][i][u] == 1 && jeu.tab[l-(taille_bloc-1-i)][c+u] != 1){     // On vérifie la valeur présente sur le plateau
+                    } else if(jeu->liste_blocs[indices_blocs[choix_bloc]][i][u] == 1 && jeu->tab[l-(taille_bloc-1-i)][c+u] != 1){     // On vérifie la valeur présente sur le plateau
                         retour = 0;
                         printf("\n\nErreur : Le bloc ne peut pas se placer ici (il y a surement un autre bloc qui le bloque, ou il n'est pas dans le plateau de jeu) !\n");
                     }
@@ -739,11 +735,11 @@ void afficher_bloc(plateau plat, int * indices_blocs){
     printf("\n\n");
 }
 
-int selection_bloc(int* indices_blocs, plateau jeu, int tentative){ // Demande à l'utilisateur de choisir un bloc dans la liste
+int selection_bloc(int* indices_blocs, plateau* jeu, int tentative){ // Demande à l'utilisateur de choisir un bloc dans la liste
     int indice_retour;                                              // indice_retour renverra l'indice du bloc choisi pour pouvoir le sélectionner dans les tableaux selon la politique
     int max;                                                        // max correspond à l'indice maximum que l'utilisateur peut choisir, selon la politique et la forme du plateau
-    if(jeu.politique == 1){
-        switch(jeu.forme){
+    if(jeu->politique == 1){
+        switch(jeu->forme){
             case 1:
                 max = 31;
                 break;
@@ -754,7 +750,7 @@ int selection_bloc(int* indices_blocs, plateau jeu, int tentative){ // Demande à
                 max = 30;
                 break;
         }
-    }else if(jeu.politique == 2){
+    }else if(jeu->politique == 2){
         max = 2;
     }
     do{
@@ -764,19 +760,19 @@ int selection_bloc(int* indices_blocs, plateau jeu, int tentative){ // Demande à
     return indice_retour;
 }
 
-int selection_coos_ligne(plateau jeu){
+int selection_coos_ligne(plateau* jeu){
     char ligne_lettre;
     int ligne, max;
     int erreur = 1;                                             // erreur est la variable servant pour boucler la demande de coordonnee
-    switch(jeu.forme){                                          // On vérifie que le maximum de ligne s'adapte à la forme choisie
+    switch(jeu->forme){                                          // On vérifie que le maximum de ligne s'adapte à la forme choisie
         case 1:
-            max = jeu.taille;
+            max = jeu->taille;
             break;
         case 2:
-            max = jeu.taille;
+            max = jeu->taille;
             break;
         case 3:
-            max = jeu.taille/2+1;
+            max = jeu->taille/2+1;
             break;
     }
     do{
@@ -797,7 +793,7 @@ int selection_coos_ligne(plateau jeu){
     return ligne;
 }
 
-int selection_coos_colonne(plateau jeu){
+int selection_coos_colonne(plateau* jeu){
     char colonne_lettre;
     int colonne;
     int erreur = 1;                                             // erreur est la variable servant pour boucler la demande de coordonnee
@@ -807,7 +803,7 @@ int selection_coos_colonne(plateau jeu){
         scanf("%c",&colonne_lettre);
         if(colonne_lettre >= 97 && colonne_lettre <= 122){
             colonne = colonne_lettre-97;
-            if(colonne < 0 || colonne >= jeu.taille){
+            if(colonne < 0 || colonne >= jeu->taille){
                 erreur = 1;
             } else {
                 erreur = 0;
@@ -846,9 +842,9 @@ void selectionner_blocs(int * indices_blocs, plateau jeu){      // Rempli un tab
     }
 }
 
-plateau placer_bloc(plateau jeu, int l, int c, int choix_bloc, int* indices_blocs){
+void placer_bloc(plateau* jeu, int l, int c, int choix_bloc, int* indices_blocs){
     int taille_bloc = 0;
-    switch(jeu.forme){
+    switch(jeu->forme){
         case 1: // Cercle
             taille_bloc = 5;
             break;
@@ -859,34 +855,33 @@ plateau placer_bloc(plateau jeu, int l, int c, int choix_bloc, int* indices_bloc
             taille_bloc = 3;
             break;
     }
-    if((choix_bloc < 20 && jeu.politique == 1) || (indices_blocs[choix_bloc] < 20 && jeu.politique == 2)){          // Si le bloc à poser est un bloc universel, le maximum de blocs qui le composent est de 4 en largeur
+    if((choix_bloc < 20 && jeu->politique == 1) || (indices_blocs[choix_bloc] < 20 && jeu->politique == 2)){          // Si le bloc à poser est un bloc universel, le maximum de blocs qui le composent est de 4 en largeur
         taille_bloc = 4;
     }
     for(int i = taille_bloc-1; i >= 0; i--){
         for(int u = 0; u < taille_bloc; u++){
-            switch(jeu.politique){
+            switch(jeu->politique){
                 case 1:
-                    if(jeu.liste_blocs[choix_bloc][i][u] == 1){
-                        jeu.tab[l-(taille_bloc-1-i)][c+u] = 2;
+                    if(jeu->liste_blocs[choix_bloc][i][u] == 1){
+                        jeu->tab[l-(taille_bloc-1-i)][c+u] = 2;
                     }
                     break;
                 case 2:
-                    if(jeu.liste_blocs[indices_blocs[choix_bloc]][i][u] == 1){
-                        jeu.tab[l-(taille_bloc-1-i)][c+u] = 2;
+                    if(jeu->liste_blocs[indices_blocs[choix_bloc]][i][u] == 1){
+                        jeu->tab[l-(taille_bloc-1-i)][c+u] = 2;
                     }
                     break;
             }
         }
     }
-    return jeu;
 }
 
-int etat_ligne(plateau jeu, int l){
+int etat_ligne(plateau* jeu, int l){
     int compteur = 0;
     int u = 0;
     int retour = 2;
-    while(compteur == 0 && u < jeu.taille){     // On réduit le nombre de calculs avec le while au lieu d'un for
-        if(jeu.tab[l][u] == 1){                 // Dès qu'on trouve un trou dans la ligne, le compteur s'incrémente, ce qui fait sortir de la boucle
+    while(compteur == 0 && u < jeu->taille){     // On réduit le nombre de calculs avec le while au lieu d'un for
+        if(jeu->tab[l][u] == 1){                 // Dès qu'on trouve un trou dans la ligne, le compteur s'incrémente, ce qui fait sortir de la boucle
             compteur ++;
         }
         u++;
@@ -896,22 +891,22 @@ int etat_ligne(plateau jeu, int l){
     } else {                                    // Si le compteur n'est plus à 0, c'est-à-dire qu'il y a eu un trou dans la ligne, on retourne 0
         retour = 0;
     }
-    if(jeu.forme == 2 && (l == 0 || l == jeu.taille-1)){
+    if(jeu->forme == 2 && (l == 0 || l == jeu->taille-1)){
         retour = 0;                             // Si la forme est un losange, on exclu la ligne du haut et du bas (ligne constituée d'une seule case)
     }
-    if(jeu.forme == 3 && l == 0){
+    if(jeu->forme == 3 && l == 0){
         retour = 0;                             // Si la forme est un triangle, on exclu la ligne du haut (ligne constituée d'une seule case)
     }
     return retour;
 }
 
-int etat_colonne(plateau jeu, int c){           // Même principe que pour etat_ligne, sauf que l'on met le triangle à part car sa hauteur est différente
+int etat_colonne(plateau* jeu, int c){           // Même principe que pour etat_ligne, sauf que l'on met le triangle à part car sa hauteur est différente
     int compteur = 0;
     int u = 0;
     int retour = 2;
-    if(jeu.forme == 1 || jeu.forme == 2){
-        while(compteur == 0 && u < jeu.taille){
-            if(jeu.tab[u][c] == 1){
+    if(jeu->forme == 1 || jeu->forme == 2){
+        while(compteur == 0 && u < jeu->taille){
+            if(jeu->tab[u][c] == 1){
                 compteur ++;
             }
             u++;
@@ -921,9 +916,9 @@ int etat_colonne(plateau jeu, int c){           // Même principe que pour etat_l
         } else {
             retour = 0;
         }
-    } else if(jeu.forme == 3){
-        while(compteur == 0 && u < jeu.taille/2+1){
-            if(jeu.tab[u][c] == 1){
+    } else if(jeu->forme == 3){
+        while(compteur == 0 && u < jeu->taille/2+1){
+            if(jeu->tab[u][c] == 1){
                 compteur ++;
             }
             u++;
@@ -934,39 +929,37 @@ int etat_colonne(plateau jeu, int c){           // Même principe que pour etat_l
             retour = 0;
         }
     }
-    if((jeu.forme == 2 || jeu.forme == 3) && (c == 0 || c == jeu.taille-1)){
+    if((jeu->forme == 2 || jeu->forme == 3) && (c == 0 || c == jeu->taille-1)){
         retour = 0;                             // Si la forme est un losange ou un triangle, on exclu la ligne de gauche et de droite (ligne constituée d'une seule case)
     }
     return retour;
 }
 
-plateau annuler_ligne(plateau jeu, int l){      // Pour toute la ligne, on remplace tous les 2 du tableau par des 1
-    for(int u = 0; u < jeu.taille; u++){
-        if(jeu.tab[l][u] == 2){
-            jeu.tab[l][u] = 1;
-            jeu = calcul_score(jeu);
+void annuler_ligne(plateau* jeu, int l){      // Pour toute la ligne, on remplace tous les 2 du tableau par des 1
+    for(int u = 0; u < jeu->taille; u++){
+        if(jeu->tab[l][u] == 2){
+            jeu->tab[l][u] = 1;
+            calcul_score(jeu);
         }
     }
-    return jeu;
 }
 
-plateau annuler_colonne(plateau jeu, int c){    // Même principe que pour annuler_ligne, en mettant encore de coté le triangle
-    if(jeu.forme == 1 || jeu.forme == 2){
-        for(int u = 0; u < jeu.taille; u++){
-            if(jeu.tab[u][c] == 2){
-                jeu.tab[u][c] = 1;
-                jeu = calcul_score(jeu);
+void annuler_colonne(plateau* jeu, int c){    // Même principe que pour annuler_ligne, en mettant encore de coté le triangle
+    if(jeu->forme == 1 || jeu->forme == 2){
+        for(int u = 0; u < jeu->taille; u++){
+            if(jeu->tab[u][c] == 2){
+                jeu->tab[u][c] = 1;
+                calcul_score(jeu);
             }
         }
-    } else if(jeu.forme == 3){
-        for(int u = 0; u < jeu.taille/2+1; u++){
-            if(jeu.tab[u][c] == 2){
-                jeu.tab[u][c] = 1;
-                jeu = calcul_score(jeu);
+    } else if(jeu->forme == 3){
+        for(int u = 0; u < jeu->taille/2+1; u++){
+            if(jeu->tab[u][c] == 2){
+                jeu->tab[u][c] = 1;
+                calcul_score(jeu);
             }
         }
     }
-    return jeu;
 }
 
 plateau decaler_lignes(plateau jeu, int i){
@@ -1027,35 +1020,32 @@ int affichage_regles(){
     return 1;
 }
 
-plateau choix_plateau(plateau jeu){
+void choix_plateau(plateau* jeu){
     printf("\n\n");
 
     do{
         printf("Taille de votre plateau (entre 21 et 25 compris, seulement en nombres impairs) : ");
-        scanf("%d", &jeu.taille);
-    }while(jeu.taille < 21 || jeu.taille > 25 || jeu.taille%2 == 0);
+        scanf("%d", &jeu->taille);
+    }while(jeu->taille < 21 || jeu->taille > 25 || jeu->taille%2 == 0);
 
     do{
         printf("\nForme de votre plateau \n1 : Cercle | 2 : Losange | 3 : Triangle \nVotre choix : ");
-        scanf("%d", &jeu.forme);
-    }while(jeu.forme != 1 && jeu.forme != 2 && jeu.forme != 3);
-
-    return jeu;
+        scanf("%d", &jeu->forme);
+    }while(jeu->forme != 1 && jeu->forme != 2 && jeu->forme != 3);
 }
 
-plateau choix_politique(plateau jeu){
+void choix_politique(plateau* jeu){
     do{
         printf("\nPolitique de jeu \n1 : Afficher a chaque tour de jeu l'ensemble des blocs disponibles et selection d'un seul a poser \n2 : Afficher uniquement 3 blocs selectionnes aleatoirement \nVotre choix : ");
-        scanf("%d", &jeu.politique);
-    }while(jeu.politique != 1 && jeu.politique != 2);
+        scanf("%d", &jeu->politique);
+    }while(jeu->politique != 1 && jeu->politique != 2);
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    return jeu;
 }
 
-void message_fin(plateau jeu){
+void message_fin(plateau* jeu){
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     printf("#############################\n   Comme un air de Tetris\n#############################\n\n");
-    printf("Vous n'avez plus de tentative...\nFin de la partie !\nVotre score : %d",jeu.score);
+    printf("Vous n'avez plus de tentative...\nFin de la partie !\nVotre score : %d",jeu->score);
     printf("\n\nMerci de votre participation !\n\n");
 }
 
