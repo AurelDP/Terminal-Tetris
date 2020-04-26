@@ -410,6 +410,7 @@ int** remplir_case_tab(int i, plateau* jeu){
     }
 }
 
+// Fonction de calcul du nombre de chiffres dans un nombre donné (utilisé pour l'affichage du score=
 int score_chiffres(int sc){
     int nb = 1;
     while(sc >= 10){
