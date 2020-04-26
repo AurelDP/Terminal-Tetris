@@ -70,16 +70,16 @@ void creer_plat_los(plateau* jeu){
     jeu->tab = creer_tab2D_dyn(jeu->taille,jeu->taille);
     int ligne,compteur;
     int decalage_ligne = 1;
-    int colonne = jeu->taille/2;
-    for(ligne = 0; ligne < jeu->taille/2+1; ligne++){
+    int colonne = jeu->taille/2;                            // Colonne est positionné initialement à la moitié de la largeur
+    for(ligne = 0; ligne < jeu->taille/2+1; ligne++){       // Pour ligne allant de 0 à la moitié de la hauteur
         for(compteur = 0; compteur < decalage_ligne; compteur++){
-            jeu->tab[ligne][colonne] = 1;
-            colonne++;
+            jeu->tab[ligne][colonne] = 1;                   // Le compteur s'incrémente de 1 jusqu'à atteindre decalage_ligne et decalage_ligne s'incrémente de 2 à chaque ligne
+            colonne++;                                      // On commence à créer le triangle supérieur du losange avec "compteur" valeurs à "1" par ligne
         }
-        decalage_ligne += 2;
-        colonne = (jeu->taille/2)-(ligne+1);
+        decalage_ligne += 2;                                // Le decalage_ligne (c'est à dire le nombre de "1" par ligne) s'incrémente de 1
+        colonne = (jeu->taille/2)-(ligne+1);                // La colonne est recalculée
     }
-    colonne = 0;
+    colonne = 0;                                            // Pour former le triangle dans l'autre sens, on utilise la même méthode en inversant les valeurs
     decalage_ligne -= 2;
     for(ligne = jeu->taille/2; ligne < jeu->taille; ligne++){
         for(compteur = 0; compteur < decalage_ligne; compteur++){
@@ -91,7 +91,7 @@ void creer_plat_los(plateau* jeu){
     }
 }
 
-void creer_plat_tri(plateau* jeu){
+void creer_plat_tri(plateau* jeu){                          // Même code que la première partie de creer_plat_los
     jeu->tab = creer_tab2D_dyn(jeu->taille/2+1,jeu->taille);
     int ligne,compteur;
     int decalage_ligne = 1;
