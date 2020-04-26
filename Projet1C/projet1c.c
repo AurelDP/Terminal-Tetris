@@ -972,10 +972,12 @@ plateau decaler_lignes(plateau jeu, int i){
     ligne_chute = (int *) malloc(jeu.taille * sizeof(int));
     for(int j = 0; j < jeu.taille; j++){ // on se deplace sur la ligne effacée
         ligne_chute[j] = i;
-        while(ligne_chute[j] < taille_max && jeu.tab[ligne_chute[j]][j] == 1){ // on test les cases en dessous voir où les blocs du dessus doivent tomber
-            ligne_chute[j] ++;
+        if(jeu.tab[i][j] != 0){
+            while(ligne_chute[j] < taille_max && jeu.tab[ligne_chute[j]][j] == 1){ // on test les cases en dessous voir où les blocs du dessus doivent tomber
+                ligne_chute[j] ++;
+            }
+            ligne_chute[j] --;
         }
-        ligne_chute[j] --;
     }
     for(int j = 0; j < jeu.taille; j++){
         cpt = 0;
