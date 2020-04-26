@@ -49,21 +49,18 @@ void creer_plat_crc(plateau* jeu){
         jeu->tab[-x + xCenter][-y + yCenter] = 1;
         jeu->tab[-y + xCenter][-x + yCenter] = 1;
     }
-    for(int i = 0; i < jeu->taille; i++){
-        valid = 0;
-        if(i > 0 && i < jeu->taille-1){
-            valid = 1;
-            compteur = 0;
-            for(int u = 0; u < jeu->taille-1; u++){
-                if(((jeu->tab[i][u] == 0 && jeu->tab[i][u+1] == 0) || (jeu->tab[i][u] == 0 && jeu->tab[i][u+1] == 1) || (jeu->tab[i][u] == 1 && jeu->tab[i][u+1] == 1)) && valid == 1 && compteur == 0){
-                    valid = 1;
-                } else if(jeu->tab[i][u] == 1 && jeu->tab[i][u+1] == 0 && valid == 1){
-                    jeu->tab[i][u+1] = 1;
-                    valid = 1;
-                    compteur ++;
-                } else {
-                    valid = 0;
-                }
+    for(int i = 1; i < jeu->taille-1; i++){ // On exclue la première et la dernière ligne car elles sont déjà remplies par l'aglorithme ci-dessus
+        valid = 1;
+        compteur = 0;
+        for(int u = 0; u < jeu->taille-1; u++){
+            if((jeu->tab[i][u] != 1 || jeu->tab[i][u+1] != 0) && valid == 1 && compteur == 0){
+                valid = 1;      // Si le bloc d'avant n'est pas plein ou celui d'après non vide et que valid = 1 et compteur = 0, on ne fait rien et on avance d'une case (ligne utilisée pour atteindre le cercle en partant de la gauche)
+            } else if(jeu->tab[i][u] == 1 && jeu->tab[i][u+1] == 0 && valid == 1){
+                jeu->tab[i][u+1] = 1;
+                valid = 1;      // Si le bloc est plein et celui d'après vide, on incrémente le compteur de 1 et on affecte la valeur 1 à la case suivante
+                compteur ++;
+            } else {            // Si le compteur est différent de 0 (c'est à dire qu'on a déjà rencontré au moins un 1 dans la ligne) et que la case actuelle est
+                valid = 0;      // un 1et que celle d'après est un 1, on sait qu'on atteint le bord droit du cercle. On arrête donc ici avec valid = 0 et on passe à ligne suivante
             }
         }
     }
