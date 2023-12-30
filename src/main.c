@@ -1,20 +1,20 @@
-#include "projet1c.h"
+#include "tetris.h"
 
 int main(){
     srand(time(NULL));
 
-    // Déclaration des variables utilisées
+    // DÃ©claration des variables utilisÃ©es
     int choix;
-    int indices_blocs[3] = {0}; // Dans le cas où la politique choisie est 2 (3 blocs aléatoires)
+    int indices_blocs[3] = {0}; // Dans le cas oÃ¹ la politique choisie est 2 (3 blocs alÃ©atoires)
     int jouer = 1;
     int indice_choix, ligne, colonne;
     int tentative = 1;
     plateau jeu = {NULL, NULL, 0, 0, 0, 0};
 
-    // Affichage de l'accueil et sélection du choix du joueur
+    // Affichage de l'accueil et sÃ©lection du choix du joueur
     choix = choix_debut();
 
-    // Affichage des règles puis attente pour lancement du jeu
+    // Affichage des rÃ¨gles puis attente pour lancement du jeu
     if(choix == 2){
         choix = affichage_regles();
     }
@@ -25,7 +25,7 @@ int main(){
         // Choix de la taille et de la forme du plateau
         choix_plateau(&jeu);
 
-        // Création du plateau en fonction de la forme choisie
+        // CrÃ©ation du plateau en fonction de la forme choisie
         if(jeu.forme == 1){
             creer_plat_crc(&jeu);
         } else if(jeu.forme == 2){
@@ -34,13 +34,13 @@ int main(){
             creer_plat_tri(&jeu);
         }
 
-        // Choix de la politique de jeu (façon de jouer)
+        // Choix de la politique de jeu (faÃ§on de jouer)
         choix_politique(&jeu);
 
         // Initialisation du plateau accueillant les blocs du jeu en fonction de la forme choisie
         init_blocs(&jeu);
 
-        // Début de la boucle de jeu
+        // DÃ©but de la boucle de jeu
         while(jouer){
             if(jeu.politique == 2){
                 selectionner_blocs(indices_blocs, jeu);

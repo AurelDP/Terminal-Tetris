@@ -1,8 +1,10 @@
-# bla
-Projet1C/Projet1C.depend
-Projet1C/obj/Debug/
-Projet1C/obj/Debug/main.o
-Projet1C/obj/Debug/projet1c.o
-Projet1C/Projet1C.layout
-Projet1C/bin/Debug/Projet1C.exe
-Projet1C/bin/Debug/
+src/Projet1C.depend
+src/obj/Debug/
+src/obj/Debug/main.o
+src/obj/Debug/projet1c.o
+src/Projet1C.layout
+src/bin/Debug/Projet1C.exe
+src/bin/Debug/
+
+.idea/
+cmake-build-debug/
